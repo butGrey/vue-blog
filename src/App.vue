@@ -2,9 +2,9 @@
   <div id="app">
     <Headers />
     <div id="cont">
+      <Tree />
       <Sidebar />
       <router-view/>
-      
     </div>
     <Footers />
   </div>
@@ -15,6 +15,7 @@
 import Headers from "./components/header"
 import Footers from "./components/footer"
 import Sidebar from "./components/sidebar"
+import Tree from "./components/tree"
 
 
 export default {
@@ -22,7 +23,8 @@ export default {
   components:{
     Headers,
     Footers,
-    Sidebar
+    Sidebar,
+    Tree
   }
 }
 </script>
