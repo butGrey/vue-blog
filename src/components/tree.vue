@@ -81,7 +81,7 @@
 			    }
 
 			    Branch.prototype.draw = function () {
-			        ctx.fillStyle = '#FFF';
+			        ctx.fillStyle = '#55220F';//树枝颜色
 			        ctx.beginPath();
 			        ctx.arc(this.x , this.y , this.radius , 0 , 2 * Math.PI);
 			        ctx.fill();
@@ -197,7 +197,7 @@
 			     * 绘制花朵
 			     */
 			    Flower.prototype.draw = function () {
-			        ctx.fillStyle = "#fb8183" ;
+			        ctx.fillStyle = "#F3097B" ;//花朵颜色
 			        for(var i = 1 ; i <= this.petals ; i++) {
 			            var x0 = this.x + this.r * Math.cos( Math.PI / 180  * (360 / this.petals) * i) ;
 			            var y0 = this.y + this.r * Math.sin( Math.PI / 180  * (360 / this.petals) * i) ;
@@ -205,7 +205,7 @@
 			            ctx.arc(x0 , y0 , this.r , 0  , 2 * Math.PI) ;
 			            ctx.fill();
 			        }
-			        ctx.fillStyle = "#fcf4f2";
+			        ctx.fillStyle = "#F56BC1";//花蕊颜色
 			        ctx.beginPath();
 			        ctx.arc(this.x  , this.y  , this.r / 2 , 0  , 2 * Math.PI) ;
 			        ctx.fill();
