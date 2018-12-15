@@ -18,7 +18,7 @@
 			    var w = 666 , h = 888 ;
 			    var ctx = null ;
 			    var treeNum = 3 ;
-			    var initRadius = 15 ;     // 树干的初始宽度
+			    var initRadius = 20 ;     // 树干的初始宽度
 			    var maxGeneration = 5 ;   // 最多分支的次数
 			    var branchArray = null ;  // 树干的集合
 			    var flowers = [];         // 花的集合
@@ -53,7 +53,7 @@
 			    function initTree () {
 			        branchArray = new BranchArray ();
 			        for(var i = 0 ; i < treeNum ; i++) {
-			            branchArray.add(new Branch(w / 10 , h));
+			            branchArray.add(new Branch(w / 5 , h));
 			        }
 			    }
 
@@ -240,12 +240,16 @@
 
 <style scoped>
 .bg-canvas{
-    width: 600px;
-    height: 900px;
+    width: 666px;
+    height: 888px;
     float: left;
-    border: 1px solide red;
     position: fixed;
     top:100px;
     left: 0px;
-}	
+}
+@media (max-width:1024px) {
+  .bg-canvas{
+    display: none;
+  }
+}
 </style>

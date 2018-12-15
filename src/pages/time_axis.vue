@@ -162,6 +162,13 @@
 		border-radius: 50%;
 		border: 6px solid #FFD9C9;
 	}
-
+  @media screen and (max-width: 414px) {
+    .articles{
+      padding: 0px;
+    }
+    .piece_year,.piece_day{
+      display: none;
+    }
+  }
 
 </style>

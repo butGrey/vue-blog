@@ -23,11 +23,10 @@
 			</div>
 			<ul class="mes">
 				<li>
-					<div class="mes_people"><img src="../assets/img/t1.jpg" alt="">
-						<span>名字</span>
-						<span>时间</span><br />
-					</div>
+					<div class="mes_people"><img src="../assets/img/t1.jpg" alt=""></div>
 					<div class="mes_content">
+            <span>名字</span>
+            <span>时间</span><br />
 						<p>没有十全十美的东西，没有十全十美的人，关键是清楚到底想要什么。得到想要的，肯定会失去另外一部分。如果什么都想要，只会什么都得不到。</p>
 						<form action="post">
 							<div class="submit submit2">回复</div>
@@ -82,7 +81,6 @@
         border-radius: 5px;
     }
 	.information{
-		display: flex;
 
 	}
 	.information input{
@@ -131,15 +129,17 @@
 		width: 100%;
 		height: 100%;
 	}
+  .mes_people{
+    float: left;
+  }
 	.mes_people img{
 		width: 60px;
 		height: 60px;
-		float: left;
 		border-radius: 50%;
 	}
-	.mes_people span{
-		float: left;
-		margin-left: 20px;
+	.mes_content span{
+    float: left;
+		margin-right: 20px;
 	}
 	.mes_content{
 		float: left;
@@ -150,6 +150,17 @@
 	.mes_content p{
 		text-align: left;
 		line-height: 20px;
-
 	}
+  @media screen and (max-width: 414px) {
+    .mes_people{
+      width: 12%;
+    }
+    .mes_people img{
+      width: 50px;
+      height: 50px;
+    }
+    .mes_content{
+      width: 75%;
+    }
+  }
 </style>

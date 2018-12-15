@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="foot">
 		
 	</div>
 </template>
@@ -16,6 +16,9 @@
 </script>
 
 <style scoped>
-	
+	.foot{
+    width: 100%;
+    height: 10rem;
+  }
 
 </style>

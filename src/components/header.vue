@@ -11,14 +11,14 @@
 						<svg class="icon" aria-hidden="true"><use xlink:href="#icon-alarm_clock"></use></svg>
 						<a href=""><router-link to="time_axis" class="button">时间轴</router-link></a>
 					</li>
-					<li class="drog_menu">
+					<li class="drog_menu displayn">
 						<svg class="icon" aria-hidden="true"><use xlink:href="#icon-mac"></use></svg>
 						<a href="">作品集</a>
 						<ul>
 							<li v-for="item in demoList"><a v-bind:href="item.url" target="view_window">{{item.name}}</a></li>
 						</ul>
 					</li>
-					<li class="drog_menu">
+					<li class="drog_menu displayn">
 						<svg class="icon" aria-hidden="true"><use xlink:href="#icon-tubiaozhizuomoban"></use></svg>
 						<a href="">文字</a>
 						<ul>
@@ -105,6 +105,9 @@
 <style scoped>
 	.hd{
 		position: relative;
+    width: 100%;
+    display: flex;
+    flex: 1;
 	}
 	.nav{
 		z-index: 999;
@@ -114,12 +117,16 @@
 		width: 100%;
 		background-color: rgba(250,146,137,.8);
 	}
+  .navs{
+    display: flex;
+    flex: 1;
+    text-align: center;
+  }
 	.navs li{
 		list-style: none;
-		display: inline-block;
-		width: 12%;
 		height: 100%;
 		text-align: center;
+    margin: 0 auto;
 	}
 	.navs li svg{
 		font-size: 20px;
@@ -129,6 +136,7 @@
 		font-weight: bold;
 		color: #fff;
 		line-height: 40px;
+    margin: 0 auto;
 	}
 
 	.drog_menu ul{
@@ -152,33 +160,35 @@
 	}
 	.bg{
 		position: relative;
-		height: 620px;
+		height: 38rem;
 		width: 100%;
-		margin-bottom: 150px;
+		margin-bottom: 10rem;
 		text-align: center;
 		background:url(../assets/img/11.jpg);
+    background-repeat: no-repeat;
 		background-size:100% 100%;
 	}
 	.ft{
 		position: absolute;
 		width: 100%;
-		height: 100%;
 		text-align: center;
-		margin: 220px auto;
-		font-size: 52px;
+		margin: 14rem auto;
+		font-size: 2.5rem;
 		color: #fff;
 	}
 	.tx{
 		position: absolute;
-		left: 50%;
 		z-index: 3;
-		width: 520px;
-		height: 240px;
-		margin-top: 480px;
-		margin-left: -260px;
+		width: 30rem;
+		height: 15rem;
 		text-align: center;
 		border-radius: 10px;
-		background-color: rgba(255,255,255,.5);		
+		background-color: rgba(255,255,255,.5);
+    left: 0;
+    right: 0;
+    top: 35rem;
+    bottom: 0;
+    margin: auto;
 	}
 	.tx img{
 		width: 140px;
@@ -204,4 +214,16 @@
 	.imgs:hover{
 
 	}
+  @media screen and (max-width: 685px) {
+    .displayn,svg,.tx{
+      display: none !important;
+    }
+    .bg{
+      margin: 0px;
+      height: 16rem;
+    }
+    .ft{
+      margin: 8rem auto;
+    }
+  }
 </style>

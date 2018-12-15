@@ -59,7 +59,7 @@
 		width: 90%;
 		height: 300px;
 		margin: 40px auto;
-		background-color: #fff;
+    	background-color: rgba(255,255,255,.5);
 		border-radius: 10px;
 	}
 	.day{
@@ -86,7 +86,7 @@
 		position: absolute;
 		width: 80px;
 		height: 25px;
-		margin-top: 130px;
+		margin-top: 6rem;
 		left: -14px;
 		background-color: #a0ede9;
 		color: #fff;
@@ -109,7 +109,6 @@
 	}
 	.title{
 		text-align: center;
-		
 	}
 	.title .a{
 		color: #fb8183;
@@ -122,17 +121,6 @@
 		font-size: 14px;
 		line-height: 30px;
 		overflow: hidden;
-/*		text-overflow:ellipsis;
-		white-space: nowrap;
-		display: block;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;		
-		word-wrap: break-word;
-		word-break: break-all;
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-    	-webkit-box-orient: vertical;*/
 	}
 	.art-content::after {
 		content: "\02026";
@@ -149,7 +137,13 @@
 		font-size: 15px;
 		font-weight: bold;
 		color: #26cac1;
-		border-right: 
 	}
-	
+  @media screen and (max-width: 414px){
+    .art-content{
+      margin: 25px 0px 10px 0px;
+    }
+    .articles{
+      margin: 40px 0px 40px 30px;
+    }
+  }
 </style>

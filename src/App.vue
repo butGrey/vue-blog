@@ -31,10 +31,11 @@ export default {
 
 <style>
 .icon {
-   width: 1em; height: 1em;
-   vertical-align: -0.15em;
+   width: 1em;
+   vertical-align: -0.7em;
    fill: currentColor;
    overflow: hidden;
+  height: 2.5rem;
 }
 #cont{
   width: 100%;

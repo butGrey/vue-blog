@@ -78,7 +78,7 @@
 </script>
 
 <style scoped>
-	@media screen and (max-width: 1020px){
+	@media screen and (max-width: 1024px){
 		.sidebar {
 		    display: none;
 		}
