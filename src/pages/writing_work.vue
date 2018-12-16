@@ -72,8 +72,8 @@
 		width: 90%;
 		height: 300px;
 		margin: 40px auto;
-		background-color: #fff;
 		border-radius: 10px;
+    background-color: rgba(255,255,255,.5);
 	}
 	.day{
 		float: left;
@@ -130,7 +130,7 @@
 	.art-content{
 		position:relative;
 		max-height: 90px;
-		margin: 50px 30px 10px 30px;
+		margin: 30px 30px 10px 30px;
 		text-align: left;
 		font-size: 14px;
 		line-height: 30px;

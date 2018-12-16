@@ -57,7 +57,7 @@
 </script>
 
 <style scoped>
-	@media screen and (max-width: 1020px){
+	@media screen and (max-width: 1024px){
 		.pages-view{
 		    width: 100%!important;
 		    float: none;   
@@ -76,7 +76,7 @@
 		border-radius: 10px;
 	}
 	.textarea-inherit {
-        width: 98%;
+        width: 94.5%;
         overflow: auto;
         border-radius: 5px;
     }
@@ -85,8 +85,9 @@
 	}
 	.information input{
 		flex: 1;
-		margin: 5px;
+    width: 31%;
 		height: 25px;
+    margin-bottom: 10px;
 		border-radius: 5px;
 		border: 1px solid #ccc;
 	}
@@ -151,7 +152,7 @@
 		text-align: left;
 		line-height: 20px;
 	}
-  @media screen and (max-width: 414px) {
+  @media screen and (max-width: 768px) {
     .mes_people{
       width: 12%;
     }

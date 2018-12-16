@@ -162,6 +162,7 @@
 		padding: 10px;
 		text-align: center;
 		border-radius: 10px;
+    cursor: pointer;
 	}
 	.items li:hover .wz{
 		opacity: 1;
@@ -170,4 +171,7 @@
 		color: red;
 		cursor: pointer;
 	}
+  .close:hover{
+    box-shadow: 1px 1px 5px #dc96af;
+  }
 </style>

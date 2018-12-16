@@ -116,7 +116,7 @@
 </script>
 
 <style scoped>
-	@media screen and (max-width: 1020px){
+	@media screen and (max-width: 1024px){
 		.pages-view{
 		    width: 100%!important;
 		    float: none;   
@@ -133,7 +133,7 @@
 		width: 90%;
 		height: 100%;
 		margin: 10px auto;
-		background-color: #fff;
+    background-color: rgba(255,255,255,.5);
 		border-radius: 10px;
 		padding: 10px 110px;
 	}
@@ -162,7 +162,10 @@
 		border-radius: 50%;
 		border: 6px solid #FFD9C9;
 	}
-  @media screen and (max-width: 414px) {
+  .timeline li a span:hover{
+    text-shadow: 0 0 0.2em #FFD9C9, 0 0 0.1em #FFD9C9;
+  }
+  @media screen and (max-width: 767px) {
     .articles{
       padding: 0px;
     }

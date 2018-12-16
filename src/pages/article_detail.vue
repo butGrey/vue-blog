@@ -91,7 +91,7 @@
 		box-sizing: border-box;
 		width: 90%;
 		margin: 40px auto;
-		background-color: #fff;
+    background-color: rgba(255,255,255,.5);
 		border-radius: 10px;
 	}
 	.articless{

@@ -41,7 +41,7 @@
 </script>
 
 <style scoped>
-	@media screen and (max-width: 1020px){
+	@media screen and (max-width: 1024px){
 		.pages-view{
 		    width: 100%!important;
 		    float: none;   
@@ -59,7 +59,7 @@
 		width: 90%;
 		height: 300px;
 		margin: 40px auto;
-    	background-color: rgba(255,255,255,.5);
+    background-color: rgba(255,255,255,.5);
 		border-radius: 10px;
 	}
 	.day{
@@ -112,11 +112,12 @@
 	}
 	.title .a{
 		color: #fb8183;
+    font-weight: 500;
 	}
 	.art-content{
 		position:relative;
 		max-height: 90px;
-		margin: 50px 30px 10px 30px;
+		margin: 30px 30px 10px 30px;
 		text-align: left;
 		font-size: 14px;
 		line-height: 30px;
@@ -138,7 +139,7 @@
 		font-weight: bold;
 		color: #26cac1;
 	}
-  @media screen and (max-width: 414px){
+  @media screen and (max-width: 768px){
     .art-content{
       margin: 25px 0px 10px 0px;
     }

@@ -49,7 +49,7 @@
 			<div class="ft">Hello , Sunshine .</div>
 			<div class="tx" id="tx">
 				<img src="../assets/img/t1.jpg" alt="" class="imgs">
-				<p>have a nice day.</p>
+				<p>have a nice day .</p>
 			</div>
 		</div>
 	</div>
@@ -138,12 +138,16 @@
 		line-height: 40px;
     margin: 0 auto;
 	}
-
+  .drog_menu{
+    position: relative;
+  }
 	.drog_menu ul{
 		position: absolute;
 		display: block;
-		width: 12%;
+		width: 100px;
+    left: -10px;
 		height: 0px;
+    margin-top: -1px;
 		transform: scaleY(0);
 		transition: .5s;
 	}
@@ -173,8 +177,9 @@
 		width: 100%;
 		text-align: center;
 		margin: 14rem auto;
-		font-size: 2.5rem;
+		font-size: 3rem;
 		color: #fff;
+    font-family: 'Fredericka the Great', cursive;
 	}
 	.tx{
 		position: absolute;
@@ -198,18 +203,19 @@
 	}
 	.tx p{
 		margin-top: 10px;
-		font-size: 16px;
+		font-size: 1.5rem;
 		font-weight: bold;
 		color: #fb8183;
+    font-family: 'Indie Flower', cursive;
 	}
 	li:hover ul{
 		transform: scaleY(1);
 	}
 	li:hover ul li{
-		background-color: rgba(250,146,137,.9);	
+		background-color: rgba(250,146,137,.8);
 	}
 	.drog_menu:hover{
-		background-color: rgba(250,146,137,.45);
+		background-color: rgba(250,146,137,0);
 	}
 	.imgs:hover{
 
@@ -224,6 +230,7 @@
     }
     .ft{
       margin: 8rem auto;
+      font-size: 2.5rem;
     }
   }
 </style>
