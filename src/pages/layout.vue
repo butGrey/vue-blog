@@ -2,19 +2,19 @@
 	<div class="pages-view">
 		<div class="articles" v-for="(item,key) in articleList">
 			<div class="day">
-				<p>{{item.month}}月</p>
-				<p>{{item.day}}日</p>
+				<p>{{item.moment.substring(5,7)}}月</p>
+				<p>{{item.moment.substring(8,10)}}日</p>
 			</div>
 			<div class="category">{{item.category}}</div>
 			<div class="contents">
-				<h2 class="title"><router-link :to="{ path:'/article_detail' , query: { item } }" class="a">{{item.title}}</router-link></h2>
+				<h2 class="title"><router-link :to="{ path:'/article_detail' , query: { key } }" class="a">{{item.title}}</router-link></h2>
 				<svg class="icon" aria-hidden="true">
 				  <use xlink:href="#icon-shijian"></use>
 				</svg>
 				<i class="art-time">{{item.year}}年{{item.month}}月{{item.day}}日{{item.time}}</i>
-				<p class="art-content">{{item.content}}<br /></p>
+				<p class="art-content" v-html="item.content"><br /></p>
 				<!-- <router-link :to="{ name:'artdetail' , params: { item } }" class="button">~阅读全文~</router-link> -->
-				<router-link :to="{ path:'/article_detail' , query: { item } }" class="button">~阅读全文~</router-link>
+				<router-link :to="{ path:'/article_detail' , query: { key } }" class="button">~阅读全文~</router-link>
 			</div>
 		</div>
 	</div>
@@ -29,7 +29,8 @@
 			}
 		},
 		created () {
-			this.$axios('/api/articleList').then(res => {
+			//this.$axios('/api/articleList').then(res => {
+      this.$axios('http://localhost:3000/articles').then(res => {
 				this.articleList = res.data.data;
 				// console.log(res);
 			})

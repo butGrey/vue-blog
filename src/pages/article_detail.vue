@@ -2,17 +2,17 @@
 	<div class="pages-view">
 		<div class="articles">
 			<div class="day">
-				<p>{{item.month}}月</p>
-				<p>{{item.day}}日</p>
+        <p>{{article.moment.substring(5,7)}}月</p>
+        <p>{{article.moment.substring(8,10)}}日</p>
 			</div>
-			<div class="category">{{this.$route.query.item.category}}</div>
+			<div class="category">{{article.category}}</div>
 			<div class="contents">
-				<h2 class="title"><a href="">{{this.$route.query.item.title}}</a></h2>
+				<h2 class="title"><a href="">{{article.title}}</a></h2>
 				<svg class="icon" aria-hidden="true">
 				  <use xlink:href="#icon-shijian"></use>
 				</svg>
-				<i class="art-time">{{this.$route.query.item.year}}年{{this.$route.query.item.month}}月{{this.$route.query.item.day}}日{{this.$route.query.item.time}}</i>
-				<p class="art-content">{{this.$route.query.item.content}}<br /></p>
+				<i class="art-time">{{article.moment}}</i>
+				<p class="art-content" v-html="article.content"><br /></p>
 			</div>
 		</div>
 			<div class="articless">
@@ -32,13 +32,14 @@
 				<p></p>
 			</div>
 			<ul class="mes">
-				<li>
-					<div class="mes_people"><img src="../assets/img/t1.jpg" alt="">
-						<span>名字</span>
-						<span>时间</span><br />
+				<li v-for="(item,key) in commentList">
+					<div class="mes_people">
+            <img v-bind:src="'http://localhost:3000/images/'+item.avator" alt="">
+						<span>{{item.name}}</span>
+						<span>{{item.moment}}</span><br />
 					</div>
 					<div class="mes_content">
-						<p>没有十全十美的东西，没有十全十美的人，关键是清楚到底想要什么。得到想要的，肯定会失去另外一部分。如果什么都想要，只会什么都得不到。</p>
+						<p v-html="item.content"></p>
 						<form action="post">
 							<div class="submit submit2">回复</div>
 						</form>
@@ -57,19 +58,40 @@
 	export default {
 	  	data () {
 		    return {
-		      item: {}
+		      key: 0,
+          article: {},
+          commentList: [],
+          str: 'http://localhost:3000/images/'
 		    }
   		},
   		mounted() {
-  			this.fetchData();
+  			//this.fetchData();
   		},
   		methods: {
-  			fetchData () {
-	      		this.item = this.$route.query.item;   	      		
-	      		JSON.stringify(this.item);
-	      		console.log(this.item);
-	  		}
-  		}
+  			// fetchData () {
+	      // 		this.item = this.$route.query.item;
+	      // 		JSON.stringify(this.item);
+	      // 		console.log(this.item);
+	  		// }
+  		},
+    created () {
+      //this.$axios('/api/articleList').then(res => {
+      this.$axios('http://localhost:3000/articles').then(res => {
+        this.key = this.$route.query.key;
+        this.article = res.data.data[this.key];
+        // console.log(res);
+        this.$axios('http://localhost:3000/comments/' + this.article.id).then(res => {
+          this.commentList = res.data.data;
+          console.log(res.data);
+        })
+          .catch(error =>{
+            console.log(error);
+          })
+      })
+        .catch(error =>{
+          console.log(error);
+        })
+    }
 	}
 </script>
 

@@ -3,13 +3,19 @@
 		<div class="articles">
 			<form method="post" id="form_message">
 				<div class="message">
-					<textarea placeholder="something you want to say ..." class="textarea-inherit" id="message_textarea" rows="3"></textarea>
+					<textarea placeholder="something you want to say ..." class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
 				</div>
 				<div class="information">
-					<input type="text" name="author" placeholder="your name *" size="20" class="">
+					<input type="text" name="name" placeholder="your name *" size="20" class="">
 					<input type="email" name="email" placeholder="your email *" size="20" class="">
 					<input type="url" name="网址" placeholder="your blog url *" size="20" class="">
 				</div>
+        <div>
+          <label>上传头像：</label>
+          <input type="file" name="avator" id="avator">
+          <input type="hidden" id="avatorVal">
+          <img class="preview" alt="预览头像">
+        </div>
 				<div class="subm">
 					<div class="submit preview">预览</div>
 					<div class="submit">提交</div>
@@ -22,12 +28,12 @@
 				<p></p>
 			</div>
 			<ul class="mes">
-				<li>
-					<div class="mes_people"><img src="../assets/img/t1.jpg" alt=""></div>
+				<li v-for="(item,key) in messageList">
+					<div class="mes_people"><img src="'http://localhost:3000/images/'+item.avator" alt=""></div>
 					<div class="mes_content">
-            <span>名字</span>
-            <span>时间</span><br />
-						<p>没有十全十美的东西，没有十全十美的人，关键是清楚到底想要什么。得到想要的，肯定会失去另外一部分。如果什么都想要，只会什么都得不到。</p>
+            <span>{{item.name}}</span>
+            <span>{{item.moment}}</span><br />
+						<p v-html="item.content"></p>
 						<form action="post">
 							<div class="submit submit2">回复</div>
 						</form>
@@ -45,14 +51,72 @@
 </template>
 
 <script>
-
 	export default{
 		name: "message_board",
 		data(){
 			return{
-				
+        messageList: []
 			}
-		}
+		},mounted(){
+      $('#avator').change(function(){
+        if (this.files.length != 0) {
+          var file = this.files[0],
+            reader = new FileReader();
+          if (!reader) {
+            this.value = '';
+            return;
+          };
+          console.log(file.size,file.type)
+          if (!/image/g.test(file.type)) {
+            fade("请上传图片文件!")
+            $('#avatorVal').val('')
+            $('form .preview').attr('src', '')
+            $('form .preview').fadeOut()
+            return
+          }
+          reader.onload = function (e) {
+            this.value = '';
+            $('form .preview').attr('src', e.target.result)
+            $('form .preview').fadeIn()
+            var image = new Image();
+            image.onload = function(){
+              var canvas = document.createElement('canvas');
+              var ctx = canvas.getContext("2d");
+              canvas.width = 100;
+              canvas.height = 100;
+              ctx.clearRect(0, 0, 100, 100);
+              ctx.drawImage(image, 0, 0, 100, 100);
+              var blob = canvas.toDataURL("image/png");
+              $('#avatorVal').val(blob)
+            }
+            image.src = e.target.result
+          };
+          reader.readAsDataURL(file);
+        };
+      });
+      $('.submit').click(function(){
+        return this.$axios.post('http://localhost:3000/message', {
+          name: $('textarea[name=name]').val(),
+          content: $('input[name=content]').val(),
+          avator: $('#avatorVal').val()
+        }).then(res => {
+          this.messageList = res.data.data;
+        })
+          .catch(error =>{
+            console.log(error);
+          });
+      });
+    },
+    created () {
+      //this.$axios('/api/articleList').then(res => {
+      this.$axios('http://localhost:3000/messages').then(res => {
+        this.messageList = res.data.data;
+      })
+        .catch(error =>{
+          console.log(error);
+        });
+
+    }
 	}
 </script>
 
