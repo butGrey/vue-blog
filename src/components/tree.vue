@@ -15,7 +15,7 @@
 		mounted(){
 			(function (window) {
 
-			    var w = 666 , h = 888 ;
+			    var w = 700 , h = 700 ;
 			    var ctx = null ;
 			    var treeNum = 3 ;
 			    var initRadius = 20 ;     // 树干的初始宽度

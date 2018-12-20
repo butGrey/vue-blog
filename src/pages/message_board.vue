@@ -10,14 +10,13 @@
 					<input type="email" name="email" placeholder="your email *" size="20" class="">
 					<input type="url" name="网址" placeholder="your blog url *" size="20" class="">
 				</div>
-        <div>
-          <label>上传头像：</label>
+        <div class="img-avator">
           <input type="file" name="avator" id="avator">
           <input type="hidden" id="avatorVal">
-          <img class="preview" alt="预览头像">
+          <img class="preview" alt="">
         </div>
 				<div class="subm">
-					<div class="submit preview">预览</div>
+					<div class="submit previews">预览</div>
 					<div class="submit">提交</div>
 				</div>
 			</form>
@@ -28,14 +27,19 @@
 				<p></p>
 			</div>
 			<ul class="mes">
-				<li v-for="(item,key) in messageList">
-					<div class="mes_people"><img src="'http://localhost:3000/images/'+item.avator" alt=""></div>
+				<li class="messagelist" v-for="(item,key) in messageList">
+					<div class="mes_people"><img :src=str+item.avator alt=""></div>
 					<div class="mes_content">
-            <span>{{item.name}}</span>
-            <span>{{item.moment}}</span><br />
-						<p v-html="item.content"></p>
+            <div class="right">
+              <span>{{item.name}}</span>
+              <span>{{item.moment}}</span>
+            </div>
+            <div class="content" v-html="item.content"></div>
 						<form action="post">
-							<div class="submit submit2">回复</div>
+              <div class="message message2">
+                <textarea placeholder="something you want to say ..." class="textarea-inherit" id="message_reply" name="reply" rows="3"></textarea>
+                <div class="submit submit2">回复</div>
+              </div>
 						</form>
 					</div>
 				</li>
@@ -55,9 +59,11 @@
 		name: "message_board",
 		data(){
 			return{
-        messageList: []
+        messageList: [],
+        str: 'http://localhost:3000/images/'
 			}
-		},mounted(){
+		},
+    mounted(){
       $('#avator').change(function(){
         if (this.files.length != 0) {
           var file = this.files[0],
@@ -65,19 +71,19 @@
           if (!reader) {
             this.value = '';
             return;
-          };
-          console.log(file.size,file.type)
+          }
+          console.log(file.size,file.type);
           if (!/image/g.test(file.type)) {
-            fade("请上传图片文件!")
-            $('#avatorVal').val('')
-            $('form .preview').attr('src', '')
-            $('form .preview').fadeOut()
+            fade("请上传图片文件!");
+            $('#avatorVal').val('');
+            $('form .preview').attr('src', '');
+            $('form .preview').fadeOut();
             return
           }
           reader.onload = function (e) {
             this.value = '';
-            $('form .preview').attr('src', e.target.result)
-            $('form .preview').fadeIn()
+            $('form .preview').attr('src', e.target.result);
+            $('form .preview').fadeIn();
             var image = new Image();
             image.onload = function(){
               var canvas = document.createElement('canvas');
@@ -92,23 +98,46 @@
             image.src = e.target.result
           };
           reader.readAsDataURL(file);
-        };
+        }
       });
       $('.submit').click(function(){
-        return this.$axios.post('http://localhost:3000/message', {
-          name: $('textarea[name=name]').val(),
-          content: $('input[name=content]').val(),
-          avator: $('#avatorVal').val()
-        }).then(res => {
-          this.messageList = res.data.data;
-        })
-          .catch(error =>{
-            console.log(error);
-          });
-      });
+        // console.log($('.form').serialize())
+        if ($('input[name=name]').val().trim() == '') {
+          fade('请输入用户名！')
+        }else if($('input[name=name]').val().match(/[<'">]/g)){
+          fade('请输入合法字符！')
+        }else if($('#avatorVal').val() == ''){
+          fade('请上传头像！')
+        }else{
+          $.ajax({
+            url: '/article_detail/' + location.pathname.split('/')[2],
+            data: {
+              name: $('input[textarea=name]').val(),
+              content: $('input[name=content]').val(),
+              avator: $('#avatorVal').val(),
+            },
+            type: "POST",
+            cache: false,
+            dataType: 'json',
+            success: function (msg) {
+              if(msg.code == 200){
+                console.log('评论成功');
+                setTimeout(function(){
+                  window.location.reload()
+                },1000)
+
+              }else{
+                console.log(msg.message)
+              }
+            },
+            error: function () {
+              alert('异常');
+            }
+          })
+        }
+      })
     },
     created () {
-      //this.$axios('/api/articleList').then(res => {
       this.$axios('http://localhost:3000/messages').then(res => {
         this.messageList = res.data.data;
       })
@@ -158,7 +187,6 @@
 	.information input:active{
 		border:1px solid #fb8183;
 	}
-
 	.information input:focus{
 	border:1px solid #fb8183;
 	}
@@ -170,14 +198,17 @@
 		font-size: 14px;
 		cursor: pointer;
 		border-radius: 5px;
+    text-align: center;
 	}
 	.submit2{
-		display: block;
+    opacity: 0;
 		margin-top: 5px;
+    margin-bottom: 10px;
+    transition: 2s;
 	}
 	.count{
 		width: 100%;
-		height: 40px;
+		height: 20px;
 	}
 	.count span{
 		float: left;
@@ -188,34 +219,69 @@
 		width: 100%;
 		border: 1px dashed #fb8183;
 	}
-
 	.mes{
 		position: relative;
 		width: 100%;
 		height: 100%;
 	}
+  .messagelist{
+    position: relative;
+    width: 100%;
+    min-height: 100px;
+    margin: 20px 0;
+    border-bottom:1px dashed #fb8183;
+  }
   .mes_people{
-    float: left;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: -60px;
   }
 	.mes_people img{
 		width: 60px;
 		height: 60px;
 		border-radius: 50%;
 	}
-	.mes_content span{
-    float: left;
+  .mes_content{
+    text-align: left;
+    display: inline-block;
+    width: 80%;
+    padding: 0 15px;
+  }
+	.right span{
 		margin-right: 20px;
 	}
-	.mes_content{
-		float: left;
-		width: 80%;
-		margin: 5px;
-		padding: 0 15px;
-	}
-	.mes_content p{
+	.content{
 		text-align: left;
 		line-height: 20px;
+    margin: 10px 0;
+    min-height: 35px;
 	}
+  .message2{
+    position: absolute;
+    transform: scaleY(0);
+    transition: 0s;
+  }
+  .mes_content:hover .message2 {
+    position: relative;
+    transform: scaleY(1);
+    transition: 0.5s;
+  }
+  .mes_content:hover .submit2 {
+    transition-delay: 0.3s;
+    opacity: 1;
+  }
+  .img-avator{
+    margin: 20px;
+    text-align: left;
+  }
+  .img-avator input{
+    vertical-align: top;
+  }
+  .preview{
+    width: 100px;
+    height: 100px;
+    border-radius: 4px;
+  }
   @media screen and (max-width: 768px) {
     .mes_people{
       width: 12%;
