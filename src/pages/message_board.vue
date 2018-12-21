@@ -7,8 +7,8 @@
 				</div>
 				<div class="information">
 					<input type="text" name="name" placeholder="your name *" size="20" class="">
-					<input type="email" name="email" placeholder="your email *" size="20" class="">
-					<input type="url" name="网址" placeholder="your blog url *" size="20" class="">
+					<!--<input type="email" name="email" placeholder="your email *" size="20" class="">-->
+					<!--<input type="url" name="网址" placeholder="your blog url *" size="20" class="">-->
 				</div>
         <div class="img-avator">
           <input type="file" name="avator" id="avator">
@@ -110,10 +110,10 @@
           fade('请上传头像！')
         }else{
           $.ajax({
-            url: '/article_detail/' + location.pathname.split('/')[2],
+            url: 'http://localhost:3000/message',
             data: {
-              name: $('input[textarea=name]').val(),
-              content: $('input[name=content]').val(),
+              name: $('input[name=name]').val(),
+              content: $('textarea[name=content]').val(),
               avator: $('#avatorVal').val(),
             },
             type: "POST",
@@ -174,7 +174,8 @@
         border-radius: 5px;
     }
 	.information{
-
+    text-align: left;
+    padding-left: 20px;
 	}
 	.information input{
 		flex: 1;
