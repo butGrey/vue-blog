@@ -8,10 +8,10 @@
 			<div class="category">{{item.category}}</div>
 			<div class="contents">
 				<h2 class="title"><router-link :to="{ path:'/article_detail' , query: { key } }" class="a">{{item.title}}</router-link></h2>
-				<svg class="icon" aria-hidden="true">
+				<svg class="icon itime" aria-hidden="true">
 				  <use xlink:href="#icon-shijian"></use>
 				</svg>
-				<i class="art-time">{{item.year}}年{{item.month}}月{{item.day}}日{{item.time}}</i>
+				<i class="art-time">{{item.moment}}</i>
 				<p class="art-content" v-html="item.content"><br /></p>
 				<!-- <router-link :to="{ name:'artdetail' , params: { item } }" class="button">~阅读全文~</router-link> -->
 				<router-link :to="{ path:'/article_detail' , query: { key } }" class="button">~阅读全文~</router-link>
@@ -63,22 +63,24 @@
     background-color: rgba(255,255,255,.5);
 		border-radius: 10px;
 	}
-	.day{
-		float: left;
-		position: absolute;
-		left: -30px;
-		top: -20px;
-		width: 60px;
-		height: 60px;
-		border-radius: 50%;
-		padding: 5px;
-		background-color: #a0ede9;
-		color: #fff;
-		text-align: center;
-		line-height: 30px;
-		box-shadow: 1px 1px 4px #bbbbbb;
-
+	.day {
+    float: left;
+    position: absolute;
+    left: -30px;
+    top: -20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: #a0ede9;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    box-shadow: 1px 1px 4px #bbbbbb;
 	}
+  .itime{
+    vertical-align: -0.9rem;
+  }
 	.day p{
 		font-weight: bold;
 		font-size: 16px;

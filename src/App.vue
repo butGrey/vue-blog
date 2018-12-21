@@ -43,11 +43,16 @@ export default {
   position: relative;
   text-align: center;
 }
-body{margin: 0;padding: 0;font-family: "微软雅黑";background-color: #fcf4f2;}
+body{margin: 0;padding: 0;font-family: "Microsoft YaHei";background-color: #fcf4f2;}
 body,html{-webkit-text-size-adjust: none;width: 100%;height: 100%;}
 *{text-decoration: none;list-style: none;}
 img{border: 0px;}
-ul,li,dl,dd,dt,ol,p,i{list-style:none;font-size: 12px;font-weight: 100;padding: 0;margin: 0;}
+ul,li,dl,dd,dt,ol,p{list-style:none;font-size: 14px;padding: 0;margin: 0;}
+span,i{font-size: 12px;}
+textarea,input {
+  font-family: "Microsoft YaHei";
+  border-color: #fff !important;
+}
 .wrap{margin: 0 auto;}
 .fl{float: left;}
 .fr{float: right;}

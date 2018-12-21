@@ -1,5 +1,6 @@
 <template>
-	 <div class="bg-canvas">
+	 <div class="bg-canvas" v-show="show">
+        <i style="float: left;color: #f35961;cursor: pointer;" v-on:click="show=!show">close</i>
         <canvas id="myCanvas">此浏览器不支持canvas</canvas>
     </div>
 </template>
@@ -9,7 +10,7 @@
 		name: "tree",
 		data(){
 			return{
-
+        show: 1
 			}
 		},
 		mounted(){
