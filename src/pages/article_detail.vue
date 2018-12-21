@@ -155,7 +155,6 @@
       this.$axios('http://localhost:3000/articles').then(res => {
         this.key = this.$route.query.key;
         this.article = res.data.data[this.key];
-        // console.log(res);
         this.$axios('http://localhost:3000/comments/' + this.article.id).then(res => {
           this.commentList = res.data.data;
           console.log(res.data);
