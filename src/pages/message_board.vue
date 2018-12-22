@@ -27,7 +27,7 @@
 		</div>
 		<div class="articles">
 			<div class="count">
-				<span>xxx条评论</span>
+				<span>Comments / {{messageList.length}} </span>
 				<p></p>
 			</div>
 			<ul class="mes">
@@ -231,6 +231,9 @@
 	.count span{
 		float: left;
 		color: #fb8183;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: Poiret One;
 	}
 	.count p{
 		float: left;

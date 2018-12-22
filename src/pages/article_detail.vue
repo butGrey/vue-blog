@@ -2,8 +2,8 @@
 	<div class="pages-view">
 		<div class="articles">
 			<div class="day">
-        <p>月</p>
-        <p>日</p>
+        <p>{{article.month}}月</p>
+        <p>{{article.day}}日</p>
 			</div>
 			<div class="category">{{article.category}}</div>
 			<div class="contents">
@@ -15,38 +15,6 @@
 				<p class="art-content" v-html="article.content"><br /></p>
 			</div>
 		</div>
-			<!--<div class="articless">-->
-			<!--<form method="post" id="form_message">-->
-				<!--<div class="message">-->
-					<!--<textarea placeholder="something you want to say ..." class="textarea-inherit" id="message_textarea" rows="3"></textarea>-->
-				<!--</div>-->
-				<!--<div class="subm">-->
-					<!--<div class="submit preview">预览</div>-->
-					<!--<div class="submit">提交</div>-->
-				<!--</div>-->
-			<!--</form>-->
-		<!--</div>-->
-		<!--<div class="articless">-->
-			<!--<div class="count">-->
-				<!--<span>xxx条评论</span>-->
-				<!--<p></p>-->
-			<!--</div>-->
-			<!--<ul class="mes">-->
-				<!--<li v-for="(item,key) in commentList">-->
-					<!--<div class="mes_people">-->
-            <!--<img :src=str+item.avator alt="">-->
-						<!--<span>{{item.name}}</span>-->
-						<!--<span>{{item.moment}}</span><br />-->
-					<!--</div>-->
-					<!--<div class="mes_content">-->
-						<!--<p v-html="item.content"></p>-->
-						<!--<form action="post">-->
-							<!--<div class="submit submit2">回复</div>-->
-						<!--</form>-->
-					<!--</div>-->
-				<!--</li>-->
-			<!--</ul>-->
-		<!--</div>-->
     <div class="articles">
       <form method="post" id="form_message">
         <div class="img-avators">
@@ -74,7 +42,7 @@
     </div>
     <div class="articles">
       <div class="count">
-        <span>xxx条评论</span>
+        <span>Comments / {{commentList.length}}</span>
         <p></p>
       </div>
       <ul class="mes">
@@ -195,10 +163,12 @@
 	  		 }
   		},
     created () {
-      //this.$axios('/api/articleList').then(res => {
       this.$axios('http://localhost:3000/articles').then(res => {
         this.key = this.$route.query.key;
         this.article = res.data.data[this.key];
+        this.article.day = this.$moment(this.article.moment).date();
+        this.article.month = this.$moment(this.article.moment).month()+1;
+        console.log(this.article.moment);
         this.$axios('http://localhost:3000/comments/' + this.article.id).then(res => {
           this.commentList = res.data.data;
           for(let i=0;i<this.commentList.length;i++){
@@ -344,8 +314,11 @@
 		height: 40px;
 	}
 	.count span{
-		float: left;
-		color: #fb8183;
+    float: left;
+    color: #fb8183;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: Poiret One;
 	}
 	.count p{
 		float: left;

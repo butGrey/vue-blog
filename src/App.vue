@@ -53,6 +53,9 @@ textarea,input {
   font-family: "Microsoft YaHei";
   border-color: #fff !important;
 }
+h2{
+  font-weight: 500;
+}
 .wrap{margin: 0 auto;}
 .fl{float: left;}
 .fr{float: right;}

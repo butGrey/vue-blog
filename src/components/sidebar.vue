@@ -31,7 +31,7 @@
 				catchList:[
 				{
 					name: "github",
-					url:"https://github.com/butGrey",
+					url:"https://github.com/",
 					icon: "icon-github"
 				},
 				{

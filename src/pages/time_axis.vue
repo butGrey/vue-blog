@@ -47,9 +47,13 @@
 			}
 		},
 		created () {
-			this.$axios('/api/articleList').then(res => {
+			this.$axios('http://localhost:3000/articles').then(res => {
 				this.articleList = res.data.data;
-				// console.log(res);
+        for(var i=0;i<this.articleList.length;i++){
+          this.articleList[i].year = this.$moment(this.articleList[i].moment).year();
+          this.articleList[i].month = this.$moment(this.articleList[i].moment).month()+1;
+          this.articleList[i].day = this.$moment(this.articleList[i].moment).date();
+        }
 			})
 			.catch(error =>{
 				console.log(error);

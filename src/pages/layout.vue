@@ -113,7 +113,6 @@
 	}
 	.title .a{
 		color: #fb8183;
-    font-weight: 500;
 	}
 	.art-content{
 		position:relative;
