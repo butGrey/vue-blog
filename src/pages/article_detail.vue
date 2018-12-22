@@ -2,8 +2,8 @@
 	<div class="pages-view">
 		<div class="articles">
 			<div class="day">
-        <p>{{article.moment.substring(5,7)}}月</p>
-        <p>{{article.moment.substring(8,10)}}日</p>
+        <p>月</p>
+        <p>日</p>
 			</div>
 			<div class="category">{{article.category}}</div>
 			<div class="contents">
@@ -67,7 +67,7 @@
             <div class="message">
               <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
             </div>
-            <div class="submit" id="submit1">提交</div>
+            <div class="submit" id="submit1" v-on:click="fetchData(article.id)">提交</div>
           </div>
         </div>
       </form>
@@ -129,7 +129,7 @@
             // 	return
             // }
             if (!/image/g.test(file.type)) {
-              fade("请上传图片文件!")
+              alert("请上传图片文件!")
               $('#avatorVal').val('')
               $('form .preview').attr('src', '')
               $('form .preview').fadeOut()
@@ -155,49 +155,44 @@
             reader.readAsDataURL(file);
           };
         })
-        $('.submit').click(function(){
-          // console.log($('.form').serialize())
-          if ($('input[name=name]').val().trim() == '') {
-            fade('请输入用户名！')
-          }else if($('input[name=name]').val().match(/[<'">]/g)){
-            fade('请输入合法字符！')
-          }else if($('#avatorVal').val() == ''){
-            fade('请上传头像！')
-          }else{
-            $.ajax({
-              url: '/article_detail/' + location.pathname.split('/')[2],
-              data: {
-                name: $('input[name=name]').val(),
-                content: $('input[name=content]').val(),
-                avator: $('#avatorVal').val(),
-              },
-              type: "POST",
-              cache: false,
-              dataType: 'json',
-              success: function (msg) {
-                if(msg.code == 200){
-                  console.log('评论成功')
-                  setTimeout(function(){
-                    window.location.reload()
-                  },1000)
 
-                }else{
-                  console.log(msg.message)
-                }
-              },
-              error: function () {
-                alert('异常');
-              }
-            })
-          }
-        })
   		},
   		methods: {
-  			// fetchData () {
-	      // 		this.item = this.$route.query.item;
-	      // 		JSON.stringify(this.item);
-	      // 		console.log(this.item);
-	  		// }
+  			 fetchData (id) {
+             // console.log($('.form').serialize())
+             if ($('input[name=name]').val().trim() == '') {
+               alert('请输入用户名！')
+             }else if($('input[name=name]').val().match(/[<'">]/g)){
+               alert('请输入合法字符！')
+             }else if($('#avatorVal').val() == ''){
+               alert('请上传头像！')
+             }else{
+               $.ajax({
+                 url: 'http://localhost:3000/article_detail/' + id,
+                 data: {
+                   name: $('input[name=name]').val(),
+                   content: $('textarea[name=content]').val(),
+                   avator: $('#avatorVal').val(),
+                 },
+                 type: "POST",
+                 cache: false,
+                 dataType: 'json',
+                 success: function (msg) {
+                   if(msg.code == 200){
+                     console.log('评论成功')
+                     setTimeout(function(){
+                       window.location.reload()
+                     },500)
+                   }else{
+                     console.log(msg)
+                   }
+                 },
+                 error: function () {
+                   alert('异常');
+                 }
+               })
+             }
+	  		 }
   		},
     created () {
       //this.$axios('/api/articleList').then(res => {
@@ -206,12 +201,14 @@
         this.article = res.data.data[this.key];
         this.$axios('http://localhost:3000/comments/' + this.article.id).then(res => {
           this.commentList = res.data.data;
-          console.log(res.data);
+          for(let i=0;i<this.commentList.length;i++){
+            this.commentList[i].moment = this.$moment(this.commentList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
+          }
         })
           .catch(error =>{
             console.log(error);
           })
-      })
+        })
         .catch(error =>{
           console.log(error);
         })

@@ -29,10 +29,8 @@
 			}
 		},
 		created () {
-			//this.$axios('/api/articleList').then(res => {
       this.$axios('http://localhost:3000/articles').then(res => {
 				this.articleList = res.data.data;
-				// console.log(res);
 			})
 			.catch(error =>{
 				console.log(error);

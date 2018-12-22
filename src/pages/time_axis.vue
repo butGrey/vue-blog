@@ -32,62 +32,8 @@
 						month: "10",
 						day: "28",
 						title: "流畅地开发一个react组件"
-					},
-					{
-						year: "2018",
-						month: "10",
-						day: "28",
-						title: "流畅地开发一个react组件"
-					},
-					{
-						year: "2018",
-						month: "10",
-						day: "28",
-						title: "流畅地开发一个react组件"
-					},
-					{
-						year: "2018",
-						month: "10",
-						day: "28",
-						title: "流畅地开发一个react组件"
-					},
-					{
-						year: "2018",
-						month: "10",
-						day: "28",
-						title: "流畅地开发一个react组件"
-					},
-					{
-						year: "2017",
-						month: "10",
-						day: "28",
-						title: "流畅地开发一个react组件"
-					},
-					{
-						year: "2017",
-						month: "10",
-						day: "28",
-						title: "流畅地开发一个react组件"
-					},
-					{
-						year: "2017",
-						month: "10",
-						day: "28",
-						title: "流畅地开发一个react组件"
-					},
-					{
-						year: "2016",
-						month: "10",
-						day: "28",
-						title: "流畅地开发一个react组件"
-					},
-					{
-						year: "2016",
-						month: "10",
-						day: "28",
-						title: "流畅地开发一个react组件"
 					}
-				]			
+				]
 			}
 		},
 		methods:{
@@ -98,9 +44,6 @@
 				else{
 					return true;
 				}
-				console.log(year1);
-				console.log(year2);
-				console.log('123');
 			}
 		},
 		created () {

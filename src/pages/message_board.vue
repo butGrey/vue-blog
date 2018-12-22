@@ -77,7 +77,7 @@
           }
           console.log(file.size,file.type);
           if (!/image/g.test(file.type)) {
-            fade("请上传图片文件!");
+            alert("请上传图片文件!");
             $('#avatorVal').val('');
             $('form .preview').attr('src', '');
             $('form .preview').fadeOut();
@@ -143,6 +143,9 @@
     created () {
       this.$axios('http://localhost:3000/messages').then(res => {
         this.messageList = res.data.data;
+        for(let i=0;i<this.messageList.length;i++){
+          this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
+        }
       })
         .catch(error =>{
           console.log(error);
