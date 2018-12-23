@@ -15,10 +15,10 @@
 		},
 		mounted(){
 			(function (window) {
-			    var w = 700 , h = 900 ;
+			    var w = 500 , h = 700 ;
 			    var ctx = null ;
 			    var treeNum = 3 ;
-			    var initRadius = 20 ;     // 树干的初始宽度
+			    var initRadius = 10 ;     // 树干的初始宽度
 			    var maxGeneration = 5 ;   // 最多分支的次数
 			    var branchArray = null ;  // 树干的集合
 			    var flowers = [];         // 花的集合
@@ -53,7 +53,7 @@
 			    function initTree () {
 			        branchArray = new BranchArray ();
 			        for(var i = 0 ; i < treeNum ; i++) {
-			            branchArray.add(new Branch(w / 5 , h));
+			            branchArray.add(new Branch(w / 4 , h));
 			        }
 			    }
 
@@ -68,7 +68,7 @@
 			        this.y = y ;
 			        this.radius = initRadius ;
 			        this.angle = Math.PI / 2 ; // 树枝的初始角度
-			        this.speed = 2.35 ;    // 数生长的速度
+			        this.speed = 1.75;    // 数生长的速度
 			        this.generation = 1 ;
 			    }
 
@@ -240,11 +240,11 @@
 
 <style scoped>
 .bg-canvas{
-    width: 666px;
-    height: 888px;
+    width: 500px;
+    height: 700px;
     float: left;
     position: fixed;
-    top:100px;
+    bottom:0px;
     left: 0px;
 }
 @media (max-width:1024px) {

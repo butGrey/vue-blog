@@ -68,11 +68,11 @@
 					},
 					{
 						name: "micro-blog",
-						url:"https://github.com/butGrey/micro-blog"
+						url:"https://github.com/"
 					},
 					{
 						name: "demo01",
-						url:"https://github.com/butGrey/myblog"
+						url:"https://github.com/"
 					}
 				]
 			}
