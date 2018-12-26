@@ -83,7 +83,7 @@
               </div>
             </form>
             <ul class="mes">
-              <li class="messagelist" v-for="(items,key) in commentreplyList">
+              <li class="messagelist" v-for="(items,key) in commentreplyList" v-if="item.id==items.commentid">
                 <div class="mes_people"><img :src=str+items.avator alt=""></div>
                 <div class="mes_content">
                   <div class="right">
