@@ -5,22 +5,20 @@
         <div class="img-avators">
           <div class="img-avator">
             <div class="userimg">
-              <input type="hidden" id="avatorVal">
+              <input type="hidden" class="avatorVal">
               <img class="preview" alt="">
             </div>
             <div class="btn btn-success fileinput-button">
               <span class="submit">上传</span>
-              <input type="file" name="avator" id="avator">
+              <input type="file" name="avator" id="avator" onchange="imgImport(event,this)">
             </div>
           </div>
           <div class="information">
             <input type="text" name="name" placeholder="your name *" size="20" class="">
-            <!--<input type="email" name="email" placeholder="your email *" size="20" class="">-->
-            <!--<input type="url" name="网址" placeholder="your blog url *" size="20" class="">-->
             <div class="message">
               <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
             </div>
-            <div class="submit" id="submit1">提交</div>
+            <div class="submit" id="submit1" v-on:click="mesSubmit('','',$event)">提交</div>
           </div>
         </div>
 			</form>
@@ -39,12 +37,74 @@
               <span class="time">{{item.moment}}</span>
             </div>
             <div class="content" v-html="item.content"></div>
-						<form action="post">
-              <div class="message message2">
-                <textarea placeholder="something you want to say ..." class="textarea-inherit" id="message_reply" name="reply" rows="3"></textarea>
-                <div class="submit submit2">回复</div>
+            <div class="submit" onclick="show(event,this)">回复</div>
+            <form method="post" class="form_message">
+              <div class="img-avators">
+                <div class="img-avator">
+                  <div class="userimg">
+                    <input type="hidden" class="avatorVal">
+                    <img class="preview" alt="">
+                  </div>
+                  <div class="btn btn-success fileinput-button">
+                    <span class="submit">上传</span>
+                    <input type="file" name="avator" class="avator" onchange="imgImport(event,this)">
+                  </div>
+                </div>
+                <div class="information">
+                  <input type="text" name="name" placeholder="your name *" size="20" class="">
+                  <div class="message">
+                    <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
+                  </div>
+                  <div class="submit submit1" v-on:click="mesSubmit(item.id,'',$event)">提交</div>
+                </div>
               </div>
-						</form>
+            </form>
+						<!--<form action="post">-->
+              <!--<div class="message message2">-->
+                <!--<textarea placeholder="something you want to say ..." class="textarea-inherit" id="message_reply" name="reply" rows="3"></textarea>-->
+                <!--<div class="submit submit2">回复</div>-->
+              <!--</div>-->
+						<!--</form>-->
+            <ul class="mes">
+              <li class="messagelist" v-for="(items,key) in messagereplyList" v-if="item.id==items.postid">
+                <div class="mes_people"><img class="reply" :src=str+items.avator alt=""></div>
+                <div class="mes_content">
+                  <div class="right">
+                    <span class="user">{{items.name}}</span>
+                    <span class="time">{{items.moment}}</span>
+                  </div>
+                  <div class="content" v-html="items.content"></div>
+                  <div class="submit" onclick="show(event,this)">回复</div>
+                  <form method="post" class="form_message">
+                    <div class="img-avators">
+                      <div class="img-avator">
+                        <div class="userimg">
+                          <input type="hidden" class="avatorVal">
+                          <img class="preview" alt="">
+                        </div>
+                        <div class="btn btn-success fileinput-button">
+                          <span class="submit">上传</span>
+                          <input type="file" name="avator" class="avator" onchange="imgImport(event,this)">
+                        </div>
+                      </div>
+                      <div class="information">
+                        <input type="text" name="name" placeholder="your name *" size="20" class="">
+                        <div class="message">
+                          <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
+                        </div>
+                        <div class="submit submit1" v-on:click="mesSubmit(items.postid,item.name,$event)">提交</div>
+                      </div>
+                    </div>
+                  </form>
+                  <!--<form action="post">-->
+                  <!--<div class="message message2">-->
+                  <!--<textarea placeholder="something you want to say ..." class="textarea-inherit" id="message_reply" name="reply" rows="3"></textarea>-->
+                  <!--<div class="submit submit2">回复</div>-->
+                  <!--</div>-->
+                  <!--</form>-->
+                </div>
+              </li>
+            </ul>
 					</div>
 				</li>
 			</ul>
@@ -63,61 +123,29 @@
 		data(){
 			return{
         messageList: [],
+        messagereplyList: [],
         str: 'http://localhost:3000/images/'
 			}
 		},
     mounted(){
-      $('#avator').change(function(){
-        if (this.files.length != 0) {
-          var file = this.files[0],
-            reader = new FileReader();
-          if (!reader) {
-            this.value = '';
-            return;
-          }
-          console.log(file.size,file.type);
-          if (!/image/g.test(file.type)) {
-            alert("请上传图片文件!");
-            $('#avatorVal').val('');
-            $('form .preview').attr('src', '');
-            $('form .preview').fadeOut();
-            return
-          }
-          reader.onload = function (e) {
-            this.value = '';
-            $('form .preview').attr('src', e.target.result);
-            $('form .preview').fadeIn();
-            var image = new Image();
-            image.onload = function(){
-              var canvas = document.createElement('canvas');
-              var ctx = canvas.getContext("2d");
-              canvas.width = 100;
-              canvas.height = 100;
-              ctx.clearRect(0, 0, 100, 100);
-              ctx.drawImage(image, 0, 0, 100, 100);
-              var blob = canvas.toDataURL("image/png");
-              $('#avatorVal').val(blob)
-            }
-            image.src = e.target.result
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-      $('#submit1').click(function(){
-        // console.log($('.form').serialize())
-        if ($('input[name=name]').val().trim() == '') {
-          fade('请输入用户名！')
-        }else if($('input[name=name]').val().match(/[<'">]/g)){
-          fade('请输入合法字符！')
-        }else if($('#avatorVal').val() == ''){
-          fade('请上传头像！')
+    },
+    methods:{
+      mesSubmit(ci,rn,event){
+        if ($(event.currentTarget).siblings('input[name=name]').val().trim() == '') {
+          alert('请输入用户名！')
+        }else if($(event.currentTarget).siblings('input[name=name]').val().match(/[<'">]/g)){
+          alert('请输入合法字符！')
+        }else if($(event.currentTarget).parent().siblings('.img-avator').children('.userimg').children('.avatorVal').val() == ''){
+          alert('请上传头像！')
         }else{
           $.ajax({
             url: 'http://localhost:3000/message',
             data: {
-              name: $('input[name=name]').val(),
-              content: $('textarea[name=content]').val(),
-              avator: $('#avatorVal').val(),
+              name: $(event.currentTarget).siblings('input[name=name]').val(),
+              content: $(event.currentTarget).siblings('.message').children('textarea[name=content]').val(),
+              avator: $(event.currentTarget).parent().siblings('.img-avator').children('.userimg').children('.avatorVal').val(),
+              rpname: rn,
+              postid: ci
             },
             type: "POST",
             cache: false,
@@ -138,7 +166,7 @@
             }
           })
         }
-      })
+      }
     },
     created () {
       this.$axios('http://localhost:3000/messages').then(res => {
@@ -146,6 +174,12 @@
         for(let i=0;i<this.messageList.length;i++){
           this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
         }
+        this.$axios('http://localhost:3000/messagereplys').then(res => {
+          this.messagereplyList = res.data.data;
+        })
+          .catch(error =>{
+            console.log(error);
+          })
       })
         .catch(error =>{
           console.log(error);
@@ -153,6 +187,49 @@
 
     }
 	}
+	window.imgImport=function (e,that) {
+    if (that.files.length != 0) {
+      var file = that.files[0],
+        reader = new FileReader();
+      if (!reader) {
+        that.value = '';
+        return;
+      }
+      console.log(file.size,file.type);
+      if (!/image/g.test(file.type)) {
+        alert("请上传图片文件!");
+        $(that).parent().siblings('.userimg').children('.avatorVal').val('');
+        $(that).parent().siblings('.userimg').children('.preview').attr('src', '');
+        $(that).parent().siblings('.userimg').children('.preview').fadeOut();
+        return
+      }
+      reader.onload = function (e) {
+        that.value = '';
+        $(that).parent().siblings('.userimg').children('.preview').attr('src', e.target.result);
+        $(that).parent().siblings('.userimg').children('.preview').fadeIn();
+        var image = new Image();
+        image.onload = function(){
+          var canvas = document.createElement('canvas');
+          var ctx = canvas.getContext("2d");
+          canvas.width = 100;
+          canvas.height = 100;
+          ctx.clearRect(0, 0, 100, 100);
+          ctx.drawImage(image, 0, 0, 100, 100);
+          var blob = canvas.toDataURL("image/png");
+          $(that).parent().siblings('.userimg').children('.avatorVal').val(blob)
+        }
+        image.src = e.target.result
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  window.show=function(event,that){
+	  if($(that).next('form').css('display')=='block'){
+      $(that).next('form').css('display','none');
+    }else{
+      $(that).next('form').css('display','block');
+    }
+  }
 </script>
 
 <style scoped>
@@ -224,6 +301,10 @@
     margin-bottom: 10px;
     transition: 2s;
 	}
+  .form_message{
+    display: none;
+  }
+  
 	.count{
 		width: 100%;
 		height: 20px;
@@ -262,6 +343,10 @@
 		height: 60px;
 		border-radius: 50%;
 	}
+  .reply{
+    width: 45px;
+    height: 45px;
+  }
   .mes_content{
     text-align: left;
     display: inline-block;
