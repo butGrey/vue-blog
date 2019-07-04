@@ -22,210 +22,139 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 /***************************************************************/
 /***************************************************************/
-let postss =
-    `create table if not exists posts(
-     id INT NOT NULL AUTO_INCREMENT,
-     title TEXT(0) NOT NULL COMMENT '文章题目',
-     category TEXT(0) NOT NULL COMMENT '文章类别',
-     content TEXT(0) NOT NULL COMMENT '文章内容',
-     PRIMARY KEY(id)
-    );`
-// 发表文章2
-exports.insertPosts = ( value ) => {
-    let _sql = "insert into postss set title=?,category=?,content=?;"
-    return query( _sql, value )
-}
-// 通过文章id查找2
-exports.findDataByIds =  ( id ) => {
-    let _sql = `select * from postss where id="${id}";`
-    return query( _sql)
-}
-// 查询所有文章2
-exports.findAllPosts = () => {
-    let _sql = `select * from postss;`
-    return query( _sql)
-}
-/***************************************************************/
-/***************************************************************/
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <script type="text/javascript" src="/jquery.min.js"></script>
-    <script type="text/javascript" src="/wangEditor.min.js"></script>
-    <link href="/common.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-<header>
-    <ul class="list">
-        <li>文章管理</li>
-        <li>用户管理</li>
-        <li>评论管理</li>
-        <li>留言管理</li>
-    </ul>
-    <div class="user">
-        <span>登录</span>
-        <span>注册</span>
-        <span>退出</span>
-    </div>
-</header>
-<div class="container">
-    <div id="div3"></div>
-    <div>
-        <button id="btn1">获取html</button>
-        <button id="btn2">获取text</button>
-    </div>
-    <form style="width:300px;" method="post" id="form2">
-        <div>
-            <label>标题：</label>
-            <input placeholder="请输入标题" type="text" name="title">
-        </div>
-        <div>
-            <label>类别：</label>
-            <input placeholder="请输入类别" type="text" name="category">
-        </div>
-        <div>
-            <label>内容：</label>
-            <textarea placeholder="请输入内容" name="content" id="" cols="42" rows="10"></textarea>
-        </div>
-        <button id="artsubm" type="submit">发表</button>
-    </form>
-</div>
+<template>
+	<div>
+		<div v-if='pagination.totalItems>1'
+				onselectstart="return false;" >
+			<ul class="page">
+				<li class="square borders" v-on:click="pageNumChange(pagination.currentPage-1)"><</li>
+				<li class="square" 
+					v-on:click="pageNumChange(1)" 
+					:class="pagination.currentPage==1?'actives':''">1</li>
+				<li class="dot" v-show='befordot'>...</li>
+				<li class="square" 
+					v-for="(item,index) in pages" 
+					v-on:click="pageNumChange(item)"
+					:class="pagination.currentPage==item?'actives':''">{{item}}</li>
+				<li class="dot" v-show='afterdot'>...</li>
+				<li class="square" 
+					v-on:click="pageNumChange(pagination.totalItems)" 
+					:class="pagination.currentPage==pagination.totalItems?'actives':''">{{pagination.totalItems}}</li>
+				<li class="square borders" v-on:click="pageNumChange(pagination.currentPage+1)">></li>
+			</ul>
+			<span class="totle">共{{pagination.totalItems}}页</span>
+			<input type="" name="" v-model="gopage">
+			<div class="jump" v-on:click="pageNumChange(gopage)">GO</div>
+		</div>
+	</div>
+</template>
 
-<script type="text/javascript">
-    var E = window.wangEditor
-    var editor2 = new E('#div3')
-    editor2.customConfig.menus = [  //菜单配置，不要可以直接去掉这个默认全部功能都有如下图
-        'head',  // 标题
-        'bold',  // 粗体
-        'fontSize',  // 字号
-        'fontName',  // 字体
-        'italic',  // 斜体
-        'underline',  // 下划线
-        'foreColor',  // 文字颜色
-        'backColor',  // 背景颜色
-        'link',  // 插入链接
-        'list',  // 列表
-        'justify',  // 对齐方式
-        'image',  // 插入图片
-        'table',  // 表格
-        'video',  // 插入视频
-        'code',  // 插入代码
-        'undo'  // 撤销
-    ];
-    editor2.create();
-    document.getElementById('btn1').addEventListener('click', function () {
-        console.log(editor2.txt.html());
-        alert(editor2.txt.html())
-    }, false);
+<script>
+	export default{
+		name:"pagination",
+		data(){
+			return{
+				pages: [], 
+				initpages: [],
+				befordot: false,
+				afterdot: false,
+			}
+		},
+		created (){
+			if(this.pagination.totalItems>2&&this.pagination.totalItems<8){
+				this.pages=[]
+				for(let i=0;i<this.pagination.totalItems-2;i++){
+					this.pages[i]=i+2;
+				}
+			}else if(this.pagination.totalItems>=8){
+				this.pages=[2,3,4,5,6];
+				this.afterdot = true;
+			}
+			this.initpages = this.pages;
+		},
+		methods:{
+			pageNumChange: function (currentPage) {
+				this.pagination.pageNumChange(currentPage);
+				if(currentPage>=1&&currentPage<=this.pagination.totalItems){
+					this.pagination.currentPage = currentPage;
+					if(this.pagination.totalItems>=6){
+						if(currentPage<=4){
+							this.afterdot = true;
+							this.befordot = false;
+							this.pages = this.initpages;
+						}else if(currentPage>4&&currentPage<this.pagination.totalItems-3){
+							this.befordot = true;
+							this.afterdot = true;
+							this.pages=[currentPage-1,currentPage,currentPage+1,currentPage+2]
+						}else if(currentPage<=this.pagination.totalItems&&currentPage>=this.pagination.totalItems-3){
+							this.befordot = true;
+							this.afterdot = false;
+							this.pages=[this.pagination.totalItems-5,this.pagination.totalItems-4,this.pagination.totalItems-3,this.pagination.totalItems-2,this.pagination.totalItems-1];		
+						}
+					}
+				}	
+			},
+		},
+		props: {
+			pagination: Object
+	    },
+	}
 
-    document.getElementById('btn2').addEventListener('click', function () {
-        alert(editor2.txt.text())
-    }, false);
-    $(document).ready(function () {
-        $("#artsubm").click(function () {
-            $.ajax({
-                type: 'post',
-                url: "/article",
-                data: $("#form2").serialize(),
-                dataType: "json",
-                success: function (msg) {
-                    if (msg.code != 200){
-                        alert("上传失败！");
-                    }else{
-                        alert("上传成功！");
-                        setTimeout(function () {
-                            window.location.href = "/article"
-                        },1500)
-                    }
-                },
-                error: function () {
-                    alert("异常");
-                }
-            });
-            console.log($("#form2").serialize());
-        })
-    })
 </script>
 
-</body>
-</html>
-/***************************************************************/
-/***************************************************************/
-const router = require('koa-router')();
-const common = require('../module/common.js');
-const config = require('../config/default.js');
-const sql = require('../lib/mysql.js');
-
-//登录页面路由
-router.get('/login',async(ctx,next)=>{
-    var compare = function () {
-        return {
-            name:'bll',
-            password:'123'
-        }
-    };
-    let content='hello,sunshine!';
-    await ctx.render('index',{
-        content:content
-    });
-});
-//获取表单提交数据（测试）
-router.post('/login',async (ctx,next)=>{
-    console.log(ctx.request.body);
-    let { name,password } = ctx.request.body;
-    if (name=="bll"&&password=="bll123"){
-        ctx.body = {
-            code: 200,
-            message: '登陆成功'
-        }
-    }else{
-        ctx.body = {
-            code: 500,
-            message: '用户名或密码错误!'
-        };
-        console.log('用户名或密码错误!');
-    }
-});
-//文章列表接口（http://localhost:3000/messages）
-router.get('/messages',async(ctx,next)=>{
-    await Promise.all([
-        sql.findAllPosts()
-    ]).then(res => {
-        ctx.body = {
-            code: 200,
-            data: res,
-            message:'获取列表成功'
-        };
-        console.log(res);
-    }).catch(err=>{
-        ctx.body = {
-            code: 500,
-            message: '获取列表失败'
-        }
-    })
-});
-//添加文章页面页面路由
-router.get('/article',async(ctx,next)=>{
-    await ctx.render('article');
-});
-//添加文章，获取表单提交的文章数据，并添加到数据库
-router.post('/article',async (ctx,next)=> {
-    console.log(ctx.request.body);
-    let {title, category, content} = ctx.request.body;
-    await  sql.insertPosts([title, category, content])
-        .then(()=> {
-            ctx.body = {
-                code: 200,
-                message: '添加文章成功'
-            }
-        }).catch(()=> {
-            ctx.body = {
-                code: 500,
-                message: '发表文章失败'
-            }
-        })
-});
-module.exports =router.routes();
+<style type="text/css">
+ul li{
+	display: inline-block;
+	width: 36px;
+	height: 32px;
+	margin: 5px;
+	line-height: 32px;
+	text-align: center;
+}
+.square{
+	border-radius: 4px;
+	text-align: center;
+	cursor:pointer;
+	color: #676767;
+}
+.page{
+	display: inline-block;
+}
+.borders{
+	border: 1px solid #ccc;
+}
+.square:hover{
+	background-color: #c5bfbf;
+	color: #fff;
+}
+.actives,.square:active{
+	background-color: #756d6d;
+	color: #fff;
+}
+.totle{
+	color: #756d6d;
+	font-size: 12px;
+	margin: 5px;
+}
+input{
+	outline: none;
+	border: 1px solid #756d6d;
+	width: 26px;
+	height: 22px;
+	padding: 4px;
+	font-size: 12px;
+}
+.jump{
+	display: inline-block;
+	width: 32px;
+	height: 30px;
+	margin-left: -5px;
+	background-color: #756d6d;
+	font-size: 12px;
+	text-align: center;
+	line-height: 30px;
+	color: #fff;
+	cursor:pointer;
+	box-shadow: 1px 1px 5px #888888;
+}
+</style>
