@@ -7,6 +7,7 @@ import Message_Board from '@/pages/message_board'
 import About_Me from '@/pages/about_me'
 import Writing_Work from '@/pages/writing_work'
 import Writing_Life from '@/pages/writing_life'
+import Component from '@/pages/component'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: "/writing_life",
       name: "writing_life",
       component: Writing_Life
+    },
+    {
+      path: "/component",
+      name: "component",
+      component: Component
     }
   ]
 })
