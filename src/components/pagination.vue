@@ -19,7 +19,7 @@
 				<li class="square borders" v-on:click="pageNumChange(pagination.currentPage+1)">></li>
 			</ul>
 			<span class="totle">共{{pagination.totalItems}}页</span>
-			<input type="" name="" v-model="gopage">
+			<input type="" name="" oninput="value=value.replace(/[^\d]/g,'')" v-model="gopage">
 			<div class="jump" v-on:click="pageNumChange(gopage)">GO</div>
 		</div>
 	</div>
@@ -50,6 +50,10 @@
 		},
 		methods:{
 			pageNumChange: function (currentPage) {
+				currentPage = currentPage-0;
+				if(currentPage==this.pagination.currentPage){
+					return
+				}
 				this.pagination.pageNumChange(currentPage);
 				if(currentPage>=1&&currentPage<=this.pagination.totalItems){
 					this.pagination.currentPage = currentPage;
