@@ -31,6 +31,7 @@
 		data(){
 			return{
 				pages: [], 
+				gopage: 0,
 				initpages: [],
 				befordot: false,
 				afterdot: false,
