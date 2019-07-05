@@ -22,4 +22,6 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 /***************************************************************/
 /***************************************************************/
-干货https://www.jianshu.com/p/e35a4916377c
+干货
+map和set数据结构：https://www.jianshu.com/p/e35a4916377c
+深拷贝和浅拷贝：https://blog.csdn.net/csdn_yudong/article/details/80326848
