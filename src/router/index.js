@@ -8,6 +8,7 @@ import About_Me from '@/pages/about_me'
 import Writing_Work from '@/pages/writing_work'
 import Writing_Life from '@/pages/writing_life'
 import Component from '@/pages/component'
+import Signin from '@/pages/signin'
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
       path: "/component",
       name: "component",
       component: Component
+    },
+    {
+      path: "/signin",
+      name: "signin",
+      component: Signin
     }
   ]
 })
