@@ -54,7 +54,7 @@
 	          alert('请上传头像！')
 	      	}else{
 	          $.ajax({
-	            url: 'http://localhost:3000/message',
+	            url: 'http://localhost:3000/addbloguser',
 	            data: {
 	              name: $('[name=name]').val(),
 	              password: $('input[name=password]').val(),
@@ -65,7 +65,7 @@
 	            dataType: 'json',
 	            success: function (msg) {
 	              if(msg.code == 200){
-	                console.log('评论成功');
+	                console.log('注册成功');
 	                setTimeout(function(){
 	                  window.location.reload()
 	                },1000)
@@ -101,8 +101,8 @@
       }
       reader.onload = function (e) {
         that.value = '';
-        $(that).parent().siblings('.userimg').children('.preview').attr('src', e.target.result);
-        $(that).parent().siblings('.userimg').children('.preview').fadeIn();
+        $('.preview').attr('src', e.target.result);
+        $('.preview').fadeIn();
         var image = new Image();
         image.onload = function(){
           var canvas = document.createElement('canvas');
@@ -112,7 +112,7 @@
           ctx.clearRect(0, 0, 100, 100);
           ctx.drawImage(image, 0, 0, 100, 100);
           var blob = canvas.toDataURL("image/png");
-          $(that).parent().siblings('.userimg').children('.avatorVal').val(blob)
+          $('.avatorVal').val(blob)
         }
         image.src = e.target.result
       };
