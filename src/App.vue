@@ -1,25 +1,32 @@
 <template>
   <div id="app">
+    <!-- <Headers />
+      <div id="cont">
+        <Tree />
+        <Sidebar />
+        <router-view/>
+      </div>
+    <Footers /> -->
     <Headers />
-    <div id="cont">
-      <Tree />
-      <Sidebar />
-      <router-view/>
-    </div>
-    <Footers />
+    <router-view/>
   </div>
 </template>
 
 <script>
 
-import Headers from "./components/header"
+import Header from "./components/header"
 import Footers from "./components/footer"
 import Sidebar from "./components/sidebar"
 import Tree from "./components/tree"
+import Headers from "./components/headers"
 
 
 export default {
   name: 'App',
+  data(){
+    return {
+    }
+  },
   components:{
     Headers,
     Footers,
@@ -43,15 +50,15 @@ export default {
   position: relative;
   text-align: center;
 }
-body{margin: 0;padding: 0;font-family: "Microsoft YaHei";background-color: #fcf4f2;}
+body{margin: 0;padding: 0;font-family: "Microsoft YaHei";background-color: #fcf4f2;width: calc(100vw - 0px);}
 body,html{-webkit-text-size-adjust: none;width: 100%;height: 100%;}
 *{text-decoration: none;list-style: none;}
 img{border: 0px;}
 ul,li,dl,dd,dt,ol,p{list-style:none;font-size: 14px;padding: 0;margin: 0;}
 span,i{font-size: 12px;}
 textarea,input {
+  outline: none;
   font-family: "Microsoft YaHei";
-  border-color: #fff !important;
 }
 h2{
   font-weight: 500;
@@ -64,10 +71,6 @@ h2{
 .pointer{cursor:pointer;}
 a,input,button{ outline:none; }
 ::-moz-focus-inner{border:0px;}
-/*a:link {color:#0f0;text-decoration:none;} 
-a:visited {color: #FFFF00; text-decoration:none;} 
-a:hover {color: #00FF00; text-decoration:underline;} 
-a:active {color: #0000FF; text-decoration:underline;}*/
 a{color: #000;}
 .wrapper{clear: both;width: 100%;}
 table { border-collapse:collapse; }
