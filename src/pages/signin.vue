@@ -124,10 +124,15 @@
 <style scoped>
     .signpage{
     	background-color: #37324a;
+    	height: calc(100vh - 0px);
+    	width: calc(100vw + 10px);
+    	display: flex;
+	    justify-content: center;
+	    align-items: center;
     }
 	#form_message{
 		width: 530px;
-		margin: 20px;
+		position: relative;
 		text-align: center;
 		background-color: rgba(255,255,255,0.1);
 	}
@@ -190,8 +195,8 @@
 		width: 150px;
 	    height: 150px;
 	    border-radius: 50%;
-	    top: 21px;
-	    left: 190px;
+	    top: 0px;
+	    left: 170px;
 	    text-align: center;
 	    position: absolute;
 	    overflow: hidden;
