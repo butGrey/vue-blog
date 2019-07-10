@@ -1,9 +1,11 @@
 <template>
-	<div>
-    	<my-pagination :pagination="pagination"> </my-pagination>
-
-		<div>当前页：{{pagination.currentPage}}</div>
-		<div>总长度：{{pagination.totalItems}}</div>
+	<div class="comp">
+		<div class="comps">
+			<div>分页组件：</div>
+			<div>当前页：{{pagination.currentPage}}</div>
+			<div>总长度：{{pagination.totalItems}}</div>
+	    	<my-pagination :pagination="pagination"> </my-pagination>
+		</div>
 	</div>
 </template>
 <script>
@@ -29,9 +31,21 @@
 			}
 		},
 		methods:{
-			doSomething: function(i){
-			  this.title+=i.time;
-			}
 		},
 	}
 </script>
+
+<style scoped>
+	div,p,a,ul,li{
+		color: #fff;
+	}
+	.comp{
+		margin-top: 100px;
+	}
+	.comps{
+		margin: 20px;
+	}
+	.comps div{
+		margin: 10px;
+	}
+</style>
