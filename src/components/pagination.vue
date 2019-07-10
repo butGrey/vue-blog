@@ -31,8 +31,8 @@
 		data(){
 			return{
 				pages: [], 
-				gopage: 0,
 				initpages: [],
+				gopage: 1,
 				befordot: false,
 				afterdot: false,
 			}
@@ -83,7 +83,7 @@
 
 </script>
 
-<style type="text/css">
+<style scoped>
 ul li{
 	display: inline-block;
 	width: 36px;
@@ -105,11 +105,11 @@ ul li{
 	border: 1px solid #ccc;
 }
 .square:hover{
-	background-color: #c5bfbf;
+	background-color: #5a576f;
 	color: #fff;
 }
 .actives,.square:active{
-	background-color: #756d6d;
+	background-color: #5a576f;
 	color: #fff;
 }
 .totle{
@@ -130,7 +130,7 @@ input{
 	width: 32px;
 	height: 30px;
 	margin-left: -5px;
-	background-color: #756d6d;
+	background-color: #5a576f;
 	font-size: 12px;
 	text-align: center;
 	line-height: 30px;
