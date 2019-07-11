@@ -6,6 +6,11 @@
 			<div>总长度：{{pagination.totalItems}}</div>
 	    	<my-pagination :pagination="pagination"> </my-pagination>
 		</div>
+		<div class="comps">
+			<div>评论组件：</div>
+			<div>总评论数：{{commentlist}}</div>
+	    	<my-comment :commentlist="commentlist"> </my-comment>
+		</div>
 	</div>
 </template>
 <script>
@@ -27,7 +32,8 @@
 					pageOptionChange: function (argument) {
 						// body...
 					}
-				}
+				},
+				commentlist:{}
 			}
 		},
 		methods:{
