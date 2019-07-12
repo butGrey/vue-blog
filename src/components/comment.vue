@@ -24,18 +24,7 @@
            <!--  <div class="submit" onclick="show(event,this)">回复</div> -->
             <form method="post" class="form_message">
               <div class="img-avators">
-                <div class="img-avator">
-                  <div class="userimg">
-                    <input type="hidden" class="avatorVal">
-                    <img class="preview" alt="">
-                  </div>
-                  <div class="btn btn-success fileinput-button">
-                    <span class="submit">上传</span>
-                    <input type="file" name="avator" class="avator" onchange="imgImport(event,this)">
-                  </div>
-                </div>
                 <div class="information">
-                  <input type="text" name="name" placeholder="your name *" size="20" class="">
                   <div class="message">
                     <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
                   </div>
@@ -49,25 +38,14 @@
                 <div class="mes_content" style="width: 94%">
                   <div class="right">
                     <span class="user">{{items.name}}</span>
-                    <span> 回复  @{{item.name}}</span>
+                    <span> 回复  @{{items.rpname}}</span>
                     <span class="time">{{items.moment}}</span>
                   </div>
                   <div class="content" v-html="items.content" onclick="show(event,this)"></div>
                  <!--  <div class="submit" onclick="show(event,this)">回复</div> -->
                   <form method="post" class="form_message">
                     <div class="img-avators">
-                      <div class="img-avator">
-                        <div class="userimg">
-                          <input type="hidden" class="avatorVal">
-                          <img class="preview" alt="">
-                        </div>
-                        <div class="btn btn-success fileinput-button">
-                          <span class="submit">上传</span>
-                          <input type="file" name="avator" class="avator" onchange="imgImport(event,this)">
-                        </div>
-                      </div>
                       <div class="information">
-                        <input type="text" name="name" placeholder="your name *" size="20" class="">
                         <div class="message">
                           <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
                         </div>
