@@ -9,12 +9,14 @@ import moment from 'moment'
 import './assets/iconfont/iconfont.js'
 import './assets/iconfont/iconfont.css'
 import MyPagination from "./components/common/pagination"
+import MyComment from "./components/common/comment"
 
 Vue.prototype.$axios = Axios
 Vue.prototype.$moment = moment;
 Vue.config.productionTip = false
-Vue.component('my-pagination', MyPagination)
 
+Vue.component('my-pagination', MyPagination)
+Vue.component('my-comment', MyComment)
 // Axios.defaults.baseURL = 'https://www.wwtliu.com';
 // Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-ulencode'
 
