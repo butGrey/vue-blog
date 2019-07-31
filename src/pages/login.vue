@@ -14,7 +14,7 @@
             </div>
             <div class="input">
             	<div>密码：</div>
-            	<input type="password" name="password" placeholder="请输入密码">
+            	<input type="password" name="password" v-model="password" placeholder="请输入密码">
             </div>
             <div class="btn submit" v-on:click="mesSubmit('','',$event)">登录</div>
             <div class="btn cancle">取消</div>
@@ -28,6 +28,7 @@
 			return{
 				imgUrl: require('../assets/img/t1.jpg'),
 				name: '',
+				password: '',
         		str: 'http://localhost:3000/images/',
         		avator: ''
 			}
@@ -67,9 +68,12 @@
 	                console.log('登录成功');
                     localStorage.setItem('user',$('input[name=name]').val());
                     sessionStorage.setItem('user',$('input[name=name]').val());
+                    localStorage.setItem('avator',this.str+this.avator);
+                    sessionStorage.setItem('avator',this.str+this.avator);
                     this.$router.push({path:'/home'})
 	              }else{
-	                console.log(msg.message)
+	          		alert('用户名或密码错误！');
+	          		this.password = '';
 	              }
 	      		})
 	      	}
