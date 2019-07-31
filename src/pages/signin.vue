@@ -10,7 +10,8 @@
             </div>
             <div class="input">
             	<div>用户名:</div>
-            	<input type="" name="name" placeholder="请输入用户名">
+            	<input type="" name="name" placeholder="请输入用户名" v-model='name' v-on:blur="getAvator(name)">
+            	<span class="tips" v-show="mesShow">{{mes}}</span>
             </div>
             <div class="input">
             	<div>密码：</div>
@@ -30,10 +31,37 @@
 		name: "signin",
 		data(){
 			return{
-
+				name: '',
+				mesShow: false,
+				mes: ''
 			}
 		},
 		methods:{
+			getAvator(name){
+				if(this.name==''){
+		          this.mesShow = true;
+		          this.mes = '请输入用户名！';
+		      		return
+		      	}else if(this.name.match(/[<'">]/g)){
+		          this.mesShow = true;
+		          this.mes = '请输入合法字符！';
+		     		return
+		      	}else{
+			        this.$axios('http://localhost:3000/checkusername/'+this.name).then(res => {
+			        	if(res.data && res.data.code=='200'){
+			        		this.mesShow = true;
+		          			this.mes = '用户名已存在，请重新输入！';
+			        	}else{
+			        		this.mesShow = false;
+		          			this.mes = '';
+
+			        	}			          
+			        })
+			          .catch(error =>{
+			            console.log(error);
+			          })
+				}
+			},
 	      mesSubmit(ci,rn,event){
 	      	if($('input[name=name]').val().trim() == ''){
 	          alert('请输入用户名！')
@@ -132,6 +160,7 @@
 	    margin: 20px auto;
 	}
 	.input{
+		position: relative;
 		height: 45px;
 		margin: 10px auto;
 	}
@@ -198,5 +227,12 @@
 	    opacity: 0.5;
 	    -ms-filter: 'alpha(opacity=0)';
 	    font-size: 200px;
+	}
+	.tips{
+		position: absolute;
+	    right: 23px;
+	    bottom: 12px;
+	    color: #fff;
+	    border: 1px solid;
 	}
 </style>
