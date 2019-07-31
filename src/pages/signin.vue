@@ -52,32 +52,21 @@
 	     		return
 	      	}else if($('.avatorVal').val() == ''){	      		
 	          alert('请上传头像！')
-	      	}else{
-	          $.ajax({
-	            url: 'http://localhost:3000/addbloguser',
-	            data: {
+	      	}else{	      			      		
+	      		this.$axios.post('http://localhost:3000/addbloguser',{
 	              name: $('[name=name]').val(),
 	              password: $('input[name=password]').val(),
-	              avator: $('.avatorVal').val()
-	            },
-	            type: "POST",
-	            cache: false,
-	            dataType: 'json',
-	            success: function (msg) {
-	              if(msg.code == 200){
-	                console.log('注册成功');
-	                setTimeout(function(){
-	                  window.location.reload()
-	                },1000)
-
+	              avator: $('.avatorVal').val() 			
+	      		}).then(res=>{	      			
+	      			if(res.data.code == 200){
+	                console.log('登录成功');
+                    localStorage.setItem('user',$('input[name=name]').val());
+                    sessionStorage.setItem('user',$('input[name=name]').val());
+                    this.$router.push({path:'/home'})
 	              }else{
 	                console.log(msg.message)
 	              }
-	            },
-	            error: function () {
-	              alert('异常');
-	            }
-	          })
+	      		})
 	      	}
 	      }
 		},
