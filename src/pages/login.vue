@@ -6,11 +6,11 @@
             </div>
             <div class="userimg">
               <input type="hidden" class="avatorVal">
-              <img class="preview" alt="" src="../assets/img/t1.jpg">
+              <img class="preview" alt="" :src= "avator?str+avator:imgUrl"   alt="">
             </div>
             <div class="input">
             	<div>用户名:</div>
-            	<input type="" name="name" placeholder="请输入用户名">
+            	<input type="" name="name" v-model="name" placeholder="请输入用户名" v-on:blur="getAvator(name)">
             </div>
             <div class="input">
             	<div>密码：</div>
@@ -26,10 +26,25 @@
 		name: "login",
 		data(){
 			return{
-
+				imgUrl: require('../assets/img/t1.jpg'),
+				name: '',
+        		str: 'http://localhost:3000/images/',
+        		avator: ''
 			}
 		},
 		methods:{
+			getAvator(name){
+				if(name==''){
+					return
+				}else{
+			        this.$axios('http://localhost:3000/getavator/'+name).then(res => {
+			          this.avator = res.data.data;
+			        })
+			          .catch(error =>{
+			            console.log(error);
+			          })
+				}
+			},
 	      mesSubmit(ci,rn,event){
 	      	if($('input[name=name]').val().trim() == ''){
 	          alert('请输入用户名！')
@@ -43,31 +58,20 @@
 	      	}else if($('input[name=password]').val().length<6){
 	          alert('密码长度不可低于6位！')
 	     		return
-	      	}else{
-	          $.ajax({
-	            url: 'http://localhost:3000/loginin',
-	            data: {
+	      	}else{	      		
+	      		this.$axios.post('http://localhost:3000/loginin',{
 	              name: $('[name=name]').val(),
-	              password: $('input[name=password]').val()
-	            },
-	            type: "POST",
-	            cache: false,
-	            dataType: 'json',
-	            success: function (msg) {
-	              if(msg.code == 200){
+	              password: $('input[name=password]').val()	      			
+	      		}).then(res=>{	      			
+	      			if(res.data.code == 200){
 	                console.log('登录成功');
-                    localStorage.setItem('user',$('[name=name]').val());
-                    sessionStorage.setItem('user',$('[name=name]').val());
-	                debugger
+                    localStorage.setItem('user',$('input[name=name]').val());
+                    sessionStorage.setItem('user',$('input[name=name]').val());
                     this.$router.push({path:'/home'})
 	              }else{
 	                console.log(msg.message)
 	              }
-	            },
-	            error: function () {
-	              alert('异常');
-	            }
-	          }.bind(this))
+	      		})
 	      	}
 	      }
 		},
