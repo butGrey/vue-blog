@@ -91,6 +91,7 @@
                     localStorage.setItem('user',$('input[name=name]').val());
                     sessionStorage.setItem('user',$('input[name=name]').val());
                     this.$router.push({path:'/home'})
+                    window.location.reload()
 	              }else{
 	                console.log(msg.message)
 	              }
