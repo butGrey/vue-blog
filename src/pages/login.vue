@@ -71,6 +71,7 @@
                     localStorage.setItem('avator',this.str+this.avator);
                     sessionStorage.setItem('avator',this.str+this.avator);
                     this.$router.push({path:'/home'})
+                    window.location.reload()
 	              }else{
 	          		alert('用户名或密码错误！');
 	          		this.password = '';
