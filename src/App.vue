@@ -50,7 +50,7 @@ export default {
   position: relative;
   text-align: center;
 }
-body{margin: 0;padding: 0;font-family: "Microsoft YaHei";background-color: #fcf4f2;width: calc(100vw - 0px);}
+body{margin: 0;padding: 0;font-family: "Microsoft YaHei";background-color: #37324a;width: calc(100vw - 0px);}
 body,html{-webkit-text-size-adjust: none;width: 100%;height: 100%;}
 *{text-decoration: none;list-style: none;}
 img{border: 0px;}
@@ -79,7 +79,7 @@ word-break:break-all /*文字换行*/
 
 /*默认滚动条样式修改ie9 google Firefox 等高版本浏览器有效*/
 ::selection {background: #D03333;color: white;text-shadow: none;}
-::-webkit-scrollbar-track-piece{width:10px;background-color:#f2f2f2}
+/*::-webkit-scrollbar-track-piece{width:10px;background-color:#f2f2f2}*/
 ::-webkit-scrollbar{width:10px;height:6px}
 ::-webkit-scrollbar-thumb{height:50px;background-color:rgba(0,0,0,.3);}
 ::-webkit-scrollbar-thumb:hover{background:#CFCFCF}
