@@ -22,9 +22,9 @@
 	export default{
 		name: "headers",
 		data(){
-			return{
+			return{			
 				user: sessionStorage.getItem('user')?sessionStorage.getItem('user'):'',
-				avator: sessionStorage.getItem('avator')?sessionStorage.getItem('avator'):''
+				avator: sessionStorage.getItem('avator')?'http://localhost:3000/images/'+sessionStorage.getItem('avator'):''
 			}
 		},
 		mounted () {
