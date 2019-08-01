@@ -15,14 +15,14 @@
             </div>
             <div class="input">
             	<div>密码：</div>
-            	<input type="password" name="password" placeholder="请输入密码">
+            	<input type="password" name="password" placeholder="请输入密码" v-model='password' >
             </div>
             <div class="input">
             	<div>确认密码：</div>
-            	<input type="password" name="repassword" placeholder="请输入确认密码">
+            	<input type="password" name="repassword" placeholder="请输入确认密码" v-model='repassword' >
             </div>
-            <div class="btn submit" v-on:click="mesSubmit('','',$event)">提交</div>
-            <div class="btn cancle">取消</div>
+            <div class="btn submit" :class="{'disable':mesShow}" v-on:click="mesSubmit('','',$event)">提交</div>
+            <div class="btn cancle" v-on:click="mesCancle()">取消</div>
 		</form>
 	</div>
 </template>
@@ -32,6 +32,8 @@
 		data(){
 			return{
 				name: '',
+				password: '',
+				repassword: '',
 				mesShow: false,
 				mes: ''
 			}
@@ -63,6 +65,9 @@
 				}
 			},
 	      mesSubmit(ci,rn,event){
+	      	if(this.mesShow){
+	      		return
+	      	}
 	      	if($('input[name=name]').val().trim() == ''){
 	          alert('请输入用户名！')
 	      		return
@@ -97,6 +102,12 @@
 	              }
 	      		})
 	      	}
+	      },
+	      mesCancle(){
+	      	this.name = '';
+	      	this.password = '';
+	      	this.repassword = '';
+	      	this.mesShow = false;
 	      }
 		},
 	}
@@ -209,6 +220,10 @@
 	.btn:hover{
 		background-color: rgba(255,255,255,.2);
 		box-shadow: 2px 2px 10px #333333; 
+	}
+	.disable,.disable:hover{
+		box-shadow: none;
+		cursor:not-allowed;
 	}
 	.fileinput-button {
 		width: 150px;
