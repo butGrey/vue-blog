@@ -68,8 +68,8 @@
 	                console.log('登录成功');
                     localStorage.setItem('user',$('input[name=name]').val());
                     sessionStorage.setItem('user',$('input[name=name]').val());
-                    localStorage.setItem('avator',this.str+this.avator);
-                    sessionStorage.setItem('avator',this.str+this.avator);
+                    localStorage.setItem('avator',this.avator);
+                    sessionStorage.setItem('avator',this.avator);
                     this.$router.push({path:'/home'})
                     window.location.reload()
 	              }else{
