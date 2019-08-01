@@ -2,7 +2,7 @@
   <div class="pages-view">
     <form method="post" id="form_message" class="mb20">
       <div class="message">
-        <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
+        <textarea v-model ="content" placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" name="content" rows="3"></textarea>
       </div>
       <div class="submit" id="submit1" v-on:click="mesSubmit('','',$event)">提交</div>
     </form>
@@ -20,45 +20,42 @@
               <span class="user">{{item.name}}</span>
               <span class="time">{{item.moment}}</span>
             </div>
-            <div class="content" v-html="item.content" onclick="show(event,this)"></div>
-           <!--  <div class="submit" onclick="show(event,this)">回复</div> -->
-            <form method="post" class="form_message">
+            <div class="button" v-on:click="showReplay($event)">查看回复</div>
+            <div class="content" v-html="item.content" v-on:click="show($event)"></div>
+
+            <form method="post" class="form_message reform">
               <div class="img-avators">
                 <div class="information">
                   <div class="message">
-                    <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
+                    <textarea v-model ="recontent" placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" name="content" rows="3"></textarea>
                   </div>
-                  <div class="submit submit1" v-on:click="mesSubmit(item.id,'',$event)">提交</div>
+                  <div class="submit submit1" v-on:click="mesSubmit(item.id,'',$event)">回复</div>
                 </div>
               </div>
             </form>
-            <ul class="mes ml40">
+
+            <ul class="mes ml40" style="display: none;">
               <li class="mb10" v-for="(items,key) in messagereplyList" v-if="item.id==items.postid">
                 <div class="mes_people"><img class="reply" :src=str+items.avator alt=""></div>
                 <div class="mes_content" style="width: 94%">
                   <div class="right">
                     <span class="user">{{items.name}}</span>
-                    <span> 回复  @{{items.rpname}}</span>
+                    <span v-if='items.rpname'> 回复  @{{items.rpname}}</span>
                     <span class="time">{{items.moment}}</span>
                   </div>
-                  <div class="content" v-html="items.content" onclick="show(event,this)"></div>
-                 <!--  <div class="submit" onclick="show(event,this)">回复</div> -->
-                  <form method="post" class="form_message">
+                  <div class="content" v-html="items.content" v-on:click="show($event)"></div>
+
+                  <form method="post" class="form_message reform">
                     <div class="img-avators">
                       <div class="information">
                         <div class="message">
-                          <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
+                          <textarea v-model ="recontents" placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" name="content" rows="3"></textarea>
                         </div>
-                        <div class="submit submit1" v-on:click="mesSubmit(items.postid,item.name,$event)">提交</div>
+                        <div class="submit submit1" v-on:click="mesSubmit(items.postid,items.name,$event)">回复</div>
                       </div>
                     </div>
                   </form>
-                  <!--<form action="post">-->
-                  <!--<div class="message message2">-->
-                  <!--<textarea placeholder="something you want to say ..." class="textarea-inherit" id="message_reply" name="reply" rows="3"></textarea>-->
-                  <!--<div class="submit submit2">回复</div>-->
-                  <!--</div>-->
-                  <!--</form>-->
+
                 </div>
               </li>
             </ul>
@@ -79,6 +76,9 @@
     name: "comment",
     data(){
       return{
+        content: '',
+        recontent: '' ,
+        recontents: '' ,
         messageList: [],
         messagereplyList: [],
         str: 'http://localhost:3000/images/'
@@ -91,19 +91,32 @@
     },
     methods:{
       mesSubmit(ci,rn,event){
-        if ($(event.currentTarget).siblings('input[name=name]').val().trim() == '') {
-          alert('请输入用户名！')
-        }else if($(event.currentTarget).siblings('input[name=name]').val().match(/[<'">]/g)){
-          alert('请输入合法字符！')
-        }else if($(event.currentTarget).parent().siblings('.img-avator').children('.userimg').children('.avatorVal').val() == ''){
-          alert('请上传头像！')
+        let that = this;
+        if(!sessionStorage.getItem("user")||!sessionStorage.getItem("avator")){
+          alert('请先登录！')
         }else{
+          if(ci){
+            if(rn){
+              var content = this.recontents;
+            }else{              
+              var content = this.recontent;
+            }
+          }else{            
+              var content = this.content;
+          }
+          if(content == ''){
+            alert('请输入内容！')
+            return
+          }        
+          var name = sessionStorage.getItem("user");  
+          var avator = sessionStorage.getItem("avator"); 
+          
           $.ajax({
             url: 'http://localhost:3000/message',
             data: {
-              name: $(event.currentTarget).siblings('input[name=name]').val(),
-              content: $(event.currentTarget).siblings('.message').children('textarea[name=content]').val(),
-              avator: $(event.currentTarget).parent().siblings('.img-avator').children('.userimg').children('.avatorVal').val(),
+              name: name,
+              content: content,
+              avator: avator,
               rpname: rn,
               postid: ci
             },
@@ -113,9 +126,22 @@
             success: function (msg) {
               if(msg.code == 200){
                 console.log('评论成功');
-                setTimeout(function(){
-                  window.location.reload()
-                },1000)
+                $(".reform").css('display','none');
+                that.$axios('http://localhost:3000/messages').then(res => {
+                  that.messageList = res.data.data;
+                  for(let i=0;i<that.messageList.length;i++){
+                    that.messageList[i].moment = that.$moment(that.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
+                  }
+                  that.$axios('http://localhost:3000/messagereplys').then(res => {
+                    that.messagereplyList = res.data.data;
+                  })
+                    .catch(error =>{
+                      console.log(error);
+                    })
+                })
+                  .catch(error =>{
+                    console.log(error);
+                  });
 
               }else{
                 console.log(msg.message)
@@ -125,6 +151,21 @@
               alert('异常');
             }
           })
+        }
+      },
+      show(that){
+        if($(that.currentTarget.nextElementSibling).css('display')=='block'){
+          $(that.currentTarget.nextElementSibling).css('display','none');
+        }else{        
+          $(".reform").css('display','none');
+          $(that.currentTarget.nextElementSibling).css('display','block');
+        }
+      },
+      showReplay(that){        
+        if($(that.currentTarget.nextElementSibling.nextElementSibling.nextElementSibling).css('display')=='block'){
+          $(that.currentTarget.nextElementSibling.nextElementSibling.nextElementSibling).css('display','none');
+        }else{        
+          $(that.currentTarget.nextElementSibling.nextElementSibling.nextElementSibling).css('display','block');
         }
       }
     },
@@ -149,49 +190,6 @@
 
     }
   }
-  window.imgImport=function (e,that) {
-    if (that.files.length != 0) {
-      var file = that.files[0],
-        reader = new FileReader();
-      if (!reader) {
-        that.value = '';
-        return;
-      }
-      console.log(file.size,file.type);
-      if (!/image/g.test(file.type)) {
-        alert("请上传图片文件!");
-        $(that).parent().siblings('.userimg').children('.avatorVal').val('');
-        $(that).parent().siblings('.userimg').children('.preview').attr('src', '');
-        $(that).parent().siblings('.userimg').children('.preview').fadeOut();
-        return
-      }
-      reader.onload = function (e) {
-        that.value = '';
-        $(that).parent().siblings('.userimg').children('.preview').attr('src', e.target.result);
-        $(that).parent().siblings('.userimg').children('.preview').fadeIn();
-        var image = new Image();
-        image.onload = function(){
-          var canvas = document.createElement('canvas');
-          var ctx = canvas.getContext("2d");
-          canvas.width = 100;
-          canvas.height = 100;
-          ctx.clearRect(0, 0, 100, 100);
-          ctx.drawImage(image, 0, 0, 100, 100);
-          var blob = canvas.toDataURL("image/png");
-          $(that).parent().siblings('.userimg').children('.avatorVal').val(blob)
-        }
-        image.src = e.target.result
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-  window.show=function(event,that){
-    if($(that).next('form').css('display')=='block'){
-      $(that).next('form').css('display','none');
-    }else{
-      $(that).next('form').css('display','block');
-    }
-  }
 </script>
 
 <style scoped>
@@ -209,6 +207,20 @@
   }
   .mb10{
     margin-bottom: 10px;
+  }
+  .button{
+    position: absolute;
+    right: 105px;
+    top: 40px;
+    width: 50px;
+    height: 26px;    
+    color: #ccc;
+    margin-bottom: 10px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    border-bottom: 1px solid;
   }
   .pages-view{
     width: 65%;   
@@ -330,17 +342,23 @@
     padding: 0 15px;
   }
   .user{
+    cursor: pointer;
     font-weight: 600;
     color: #af9ad8;
-    font-size: 14px;
+    font-size: 12px;
   }
   .content{
+    cursor: pointer;
+    width: 90%;
     text-align: left;
     line-height: 20px;
     margin-top: 5px;
     min-height: 60px;
   }
   .time{
+    cursor: pointer;
+    color: #ccc;
+    font-weight: 400;
     font-size: 10px;
     float: right;
   }
