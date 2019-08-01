@@ -92,9 +92,11 @@
 	              avator: $('.avatorVal').val() 			
 	      		}).then(res=>{	      			
 	      			if(res.data.code == 200){
-	                console.log('登录成功');
+	                console.log('注册成功');
                     localStorage.setItem('user',$('input[name=name]').val());
                     sessionStorage.setItem('user',$('input[name=name]').val());
+                    localStorage.setItem('avator',res.data);
+                    sessionStorage.setItem('avator',res.data);
                     this.$router.push({path:'/home'})
                     window.location.reload()
 	              }else{
