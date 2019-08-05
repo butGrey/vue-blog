@@ -1,7 +1,7 @@
 <template>
 	<div class="page">
 		<div class="pages-view">
-			<div class="articles" v-for="(item,key) in articleList">
+			<div class="articles" v-for="(item,key) in currentArticleList">
 				<div class="day">
 					<p>{{item.moment.substring(5,7)}}月</p>
 					<p>{{item.moment.substring(8,10)}}日</p>
@@ -18,8 +18,8 @@
 					<router-link :to="{ path:'/article_details' , query: { key } }" class="button">~阅读全文~</router-link>
 				</div>
 			</div>
+	    	<my-pagination v-if="articleList.length>5" :pagination="pagination" v-on:page-change="pageNumChange"> </my-pagination>
 		</div>
-			
 	</div>
 </template>
 
@@ -29,18 +29,42 @@
 		data(){
 			return{
 				articleList:[],
+				currentArticleList:[],
+				pagination: {
+					currentPage: 1,
+					totalItems: '',
+					pageSize: 5,
+					type: 0,
+					pageNumChange: function (currentPage) {
+						console.log(currentPage);
+						//this.currentArticleList = this.articleList.slice(currentPage*5-5,currentPage*5);
+					},
+					pageUpdate: function (argument) {
+						// body...
+					},
+					pageOptionChange: function (argument) {
+						// body...
+					}
+				},
 			}
-		},
-		methods:{
 		},
 		created () {
 	      this.$axios('http://localhost:3000/articles').then(res => {
+					this.pagination.totalItems = Math.ceil(res.data.data.length/5);
 					this.articleList = res.data.data;
+					this.currentArticleList = this.articleList.slice(0,5);
 				})
 				.catch(error =>{
 					console.log(error);
 				})
-		}
+		},
+		methods:{
+			pageNumChange: function (currentPage) {
+				this.currentArticleList = this.articleList.slice( currentPage*5-5, currentPage*5);
+			}
+		},
+		mounted(){
+        }
 	}
 </script>
 
