@@ -15,6 +15,7 @@
 				<p class="art-content" v-html="article.content"><br /></p>
 			</div>
 		</div>
+        <my-comment :messageList="messageList" :messagereplyList="messagereplyList" :getUrl="getUrl" :getUrlre="getUrlre" :postUrl="postUrl"> </my-comment>
 	</div>
 </template>
 <script>
@@ -25,7 +26,13 @@
           article: {},
           commentList: [],
           commentreplyList:[],
-          str: 'http://localhost:3000/images/'
+          str: 'http://localhost:3000/images/',
+          messageList: [],
+          messagereplyList: [],
+          getUrl: '',
+          getUrlre: '',
+          postUrl: ''
+
 		    }
   		},
   		mounted() {
@@ -76,13 +83,16 @@
         this.article.day = this.$moment(this.article.moment).date();
         this.article.month = this.$moment(this.article.moment).month()+1;
         console.log(this.article.moment);
-        this.$axios('http://localhost:3000/comments/' + this.article.id).then(res => {
-          this.commentList = res.data.data;
-          for(let i=0;i<this.commentList.length;i++){
-            this.commentList[i].moment = this.$moment(this.commentList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
+        this.getUrl = 'http://localhost:3000/comments/' + this.article.id;
+        this.getUrlre = 'http://localhost:3000/commentreplys/' + this.article.id;
+        this.postUrl =  'http://localhost:3000/article_detail/' + this.article.id;
+        this.$axios(this.getUrl).then(res => {
+          this.messageList = res.data.data;
+          for(let i=0;i<this.messageList.length;i++){
+            this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
           }
-          this.$axios('http://localhost:3000/commentreplys/' + this.article.id).then(res => {
-            this.commentreplyList = res.data.data;
+          this.$axios(this.getUrlre).then(res => {
+            this.messagereplyList = res.data.data;
           })
             .catch(error =>{
               console.log(error);
@@ -97,42 +107,6 @@
         })
     }
 	}
-  window.imgImport=function (e,that) {
-    if (that.files.length != 0) {
-      var file = that.files[0],
-        reader = new FileReader();
-      if (!reader) {
-        that.value = '';
-        return;
-      }
-      console.log(file.size,file.type);
-      if (!/image/g.test(file.type)) {
-        alert("请上传图片文件!");
-        $(that).parent().siblings('.userimg').children('.avatorVal').val('');
-        $(that).parent().siblings('.userimg').children('.preview').attr('src', '');
-        $(that).parent().siblings('.userimg').children('.preview').fadeOut();
-        return
-      }
-      reader.onload = function (e) {
-        that.value = '';
-        $(that).parent().siblings('.userimg').children('.preview').attr('src', e.target.result);
-        $(that).parent().siblings('.userimg').children('.preview').fadeIn();
-        var image = new Image();
-        image.onload = function(){
-          var canvas = document.createElement('canvas');
-          var ctx = canvas.getContext("2d");
-          canvas.width = 100;
-          canvas.height = 100;
-          ctx.clearRect(0, 0, 100, 100);
-          ctx.drawImage(image, 0, 0, 100, 100);
-          var blob = canvas.toDataURL("image/png");
-          $(that).parent().siblings('.userimg').children('.avatorVal').val(blob)
-        }
-        image.src = e.target.result
-      };
-      reader.readAsDataURL(file);
-    }
-  }
   window.show=function(event,that){
     if($(that).next('form').css('display')=='block'){
       $(that).next('form').css('display','none');
