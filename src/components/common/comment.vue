@@ -2,7 +2,7 @@
   <div class="pages-view">
     <form method="post" id="form_message" class="mb20">
       <div class="message">
-        <textarea v-model ="content" placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" name="content" rows="3"></textarea>
+        <textarea v-model ="content" placeholder="something you want to say( ps: unable to delete ... )" class="textarea-inherit" name="content" rows="3"></textarea>
       </div>
       <div class="submit" id="submit1" v-on:click="mesSubmit('','',$event)">提交</div>
     </form>
@@ -20,14 +20,14 @@
               <span class="user">{{item.name}}</span>
               <span class="time">{{item.moment}}</span>
             </div>
-            <div class="button" v-on:click="showReplay($event)">查看回复</div>
+            <div class="button" v-on:click="showReplay($event)">回复({{item.relen}})</div>
             <div class="content" v-html="item.content" v-on:click="show($event)"></div>
 
             <form method="post" class="form_message reform">
               <div class="img-avators">
                 <div class="information">
                   <div class="message">
-                    <textarea v-model ="recontent" placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" name="content" rows="3"></textarea>
+                    <textarea v-model ="recontent" placeholder="something you want to say( ps: unable to delete ... )" class="textarea-inherit" name="content" rows="3"></textarea>
                   </div>
                   <div class="submit submit1" v-on:click="mesSubmit(item.id,'',$event)">回复</div>
                 </div>
@@ -49,7 +49,7 @@
                     <div class="img-avators">
                       <div class="information">
                         <div class="message">
-                          <textarea v-model ="recontents" placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" name="content" rows="3"></textarea>
+                          <textarea v-model ="recontents" placeholder="something you want to say( ps: unable to delete ... )" class="textarea-inherit" name="content" rows="3"></textarea>
                         </div>
                         <div class="submit submit1" v-on:click="mesSubmit(items.postid,items.name,$event)">回复</div>
                       </div>
@@ -79,12 +79,12 @@
         content: '',
         recontent: '' ,
         recontents: '' ,
+        messageList: [],
+        messagereplyList: [],
         str: 'http://localhost:3000/images/',
       }
     },
     props: {
-      messageList: Array,
-      messagereplyList: Array,
       getUrl: String,
       getUrlre: String,
       postUrl: String,
@@ -112,7 +112,7 @@
           }        
           var name = sessionStorage.getItem("user");  
           var avator = sessionStorage.getItem("avator"); 
-          
+
           $.ajax({
             url: that.postUrl,
             data: {
@@ -136,6 +136,14 @@
                   }
                   that.$axios(that.getUrlre).then(res => {
                     that.messagereplyList = res.data.data;
+                    that.messageList.forEach(item=>{
+                      item.relen = 0;
+                      that.messagereplyList.forEach(x=>{
+                        if(item.id==x.postid){
+                          item.relen = item.relen+1
+                        }
+                      })
+                    })
                   })
                     .catch(error =>{
                       console.log(error);
@@ -163,7 +171,7 @@
           $(that.currentTarget.nextElementSibling).css('display','block');
         }
       },
-      showReplay(that){        
+      showReplay(that){ 
         if($(that.currentTarget.nextElementSibling.nextElementSibling.nextElementSibling).css('display')=='block'){
           $(that.currentTarget.nextElementSibling.nextElementSibling.nextElementSibling).css('display','none');
         }else{        
@@ -172,23 +180,32 @@
       }
     },
     created () {
-      // this.$axios('http://localhost:3000/messages').then(res => {
-      //   this.messageList = res.data.data;
-      //   for(let i=0;i<this.messageList.length;i++){
-      //     this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
-      //   }
-      //   this.$axios('http://localhost:3000/messagereplys').then(res => {
-      //     this.messagereplyList = res.data.data;
-      //     console.log(this.messageList)
-      //     console.log(this.messagereplyList)
-      //   })
-      //     .catch(error =>{
-      //       console.log(error);
-      //     })
-      // })
-      //   .catch(error =>{
-      //     console.log(error);
-      //   });
+      console.log('路由'+this.getUrl)
+      this.$axios(this.getUrl).then(res => {
+        this.messageList = res.data.data;
+        for(let i=0;i<this.messageList.length;i++){
+          this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
+        }
+        console.log('回复路由'+this.getUrlre);
+        this.$axios(this.getUrlre).then(res => {
+          this.messagereplyList = res.data.data;
+            this.messageList.forEach(item=>{
+              item.relen = 0;
+              this.messagereplyList.forEach(x=>{
+                if(item.id==x.postid){
+                  item.relen = item.relen+1
+                }
+              })
+            })
+            console.log(this.messageList)          
+        })
+          .catch(error =>{
+            console.log(error);
+          })
+      })
+        .catch(error =>{
+          console.log(error);
+        });
 
     }
   }
@@ -200,6 +217,9 @@
         width: 100%!important;
         float: none;   
     }
+  }
+  div,p,a,ul,li{
+    color: #fff;
   }
   .mb20{
     margin-bottom: 20px;
@@ -352,6 +372,7 @@
   .content{
     cursor: pointer;
     width: 90%;
+    color: #fff;
     text-align: left;
     line-height: 20px;
     margin-top: 5px;
