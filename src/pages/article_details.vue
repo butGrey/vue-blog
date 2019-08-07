@@ -15,7 +15,7 @@
 				<p class="art-content" v-html="article.content"><br /></p>
 			</div>
 		</div>
-        <my-comment :messageList="messageList" :messagereplyList="messagereplyList" :getUrl="getUrl" :getUrlre="getUrlre" :postUrl="postUrl"> </my-comment>
+        <my-comment v-if="postUrl" :getUrl="getUrl" :getUrlre="getUrlre" :postUrl="postUrl"> </my-comment>
 	</div>
 </template>
 <script>
@@ -24,11 +24,7 @@
 		    return {
 		      key: 0,
           article: {},
-          commentList: [],
-          commentreplyList:[],
           str: 'http://localhost:3000/images/',
-          messageList: [],
-          messagereplyList: [],
           getUrl: '',
           getUrlre: '',
           postUrl: ''
@@ -38,43 +34,6 @@
   		mounted() {
   		},
   		methods: {
-        mesSubmit (id,cid,rn,event) {
-             // console.log($('.form').serialize())
-             if ($(event.currentTarget).siblings('input[name=name]').val().trim() == '') {
-               alert('请输入用户名！')
-             }else if($(event.currentTarget).siblings('input[name=name]').val().match(/[<'">]/g)){
-               alert('请输入合法字符！')
-             }else if($(event.currentTarget).parent().siblings('.img-avator').children('.userimg').children('.avatorVal').val() == ''){
-               alert('请上传头像！')
-             }else{
-               $.ajax({
-                 url: 'http://localhost:3000/article_detail/' + id,
-                 data: {
-                   name: $(event.currentTarget).siblings('input[name=name]').val(),
-                   content: $(event.currentTarget).siblings('.message').children('textarea[name=content]').val(),
-                   avator: $(event.currentTarget).parent().siblings('.img-avator').children('.userimg').children('.avatorVal').val(),
-                   rpname: rn,
-                   commentid: cid
-                 },
-                 type: "POST",
-                 cache: false,
-                 dataType: 'json',
-                 success: function (msg) {
-                   if(msg.code == 200){
-                     console.log('评论成功')
-                     setTimeout(function(){
-                       window.location.reload()
-                     },500)
-                   }else{
-                     console.log(msg)
-                   }
-                 },
-                 error: function () {
-                   alert('异常');
-                 }
-               })
-             }
-	  		 }
   		},
     created () {
       this.$axios('http://localhost:3000/articles').then(res => {
@@ -86,21 +45,21 @@
         this.getUrl = 'http://localhost:3000/comments/' + this.article.id;
         this.getUrlre = 'http://localhost:3000/commentreplys/' + this.article.id;
         this.postUrl =  'http://localhost:3000/article_detail/' + this.article.id;
-        this.$axios(this.getUrl).then(res => {
-          this.messageList = res.data.data;
-          for(let i=0;i<this.messageList.length;i++){
-            this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
-          }
-          this.$axios(this.getUrlre).then(res => {
-            this.messagereplyList = res.data.data;
-          })
-            .catch(error =>{
-              console.log(error);
-            })
-        })
-          .catch(error =>{
-            console.log(error);
-          })
+        // this.$axios(this.getUrl).then(res => {
+        //   this.messageList = res.data.data;
+        //   for(let i=0;i<this.messageList.length;i++){
+        //     this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
+        //   }
+        //   this.$axios(this.getUrlre).then(res => {
+        //     this.messagereplyList = res.data.data;
+        //   })
+        //     .catch(error =>{
+        //       console.log(error);
+        //     })
+        // })
+          // .catch(error =>{
+          //   console.log(error);
+          // })
         })
         .catch(error =>{
           console.log(error);
