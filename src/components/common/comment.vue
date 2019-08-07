@@ -79,13 +79,15 @@
         content: '',
         recontent: '' ,
         recontents: '' ,
-        messageList: [],
-        messagereplyList: [],
-        str: 'http://localhost:3000/images/'
+        str: 'http://localhost:3000/images/',
       }
     },
     props: {
-      commentlist: Object
+      messageList: Array,
+      messagereplyList: Array,
+      getUrl: String,
+      getUrlre: String,
+      postUrl: String,
     },
     mounted(){
     },
@@ -110,9 +112,9 @@
           }        
           var name = sessionStorage.getItem("user");  
           var avator = sessionStorage.getItem("avator"); 
-          
+          debugger
           $.ajax({
-            url: 'http://localhost:3000/message',
+            url: that.postUrl,
             data: {
               name: name,
               content: content,
@@ -127,12 +129,12 @@
               if(msg.code == 200){
                 console.log('评论成功');
                 $(".reform").css('display','none');
-                that.$axios('http://localhost:3000/messages').then(res => {
+                that.$axios(that.getUrl).then(res => {
                   that.messageList = res.data.data;
                   for(let i=0;i<that.messageList.length;i++){
                     that.messageList[i].moment = that.$moment(that.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
                   }
-                  that.$axios('http://localhost:3000/messagereplys').then(res => {
+                  that.$axios(that.getUrlre).then(res => {
                     that.messagereplyList = res.data.data;
                   })
                     .catch(error =>{
@@ -170,23 +172,23 @@
       }
     },
     created () {
-      this.$axios('http://localhost:3000/messages').then(res => {
-        this.messageList = res.data.data;
-        for(let i=0;i<this.messageList.length;i++){
-          this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
-        }
-        this.$axios('http://localhost:3000/messagereplys').then(res => {
-          this.messagereplyList = res.data.data;
-          console.log(this.messageList)
-          console.log(this.messagereplyList)
-        })
-          .catch(error =>{
-            console.log(error);
-          })
-      })
-        .catch(error =>{
-          console.log(error);
-        });
+      // this.$axios('http://localhost:3000/messages').then(res => {
+      //   this.messageList = res.data.data;
+      //   for(let i=0;i<this.messageList.length;i++){
+      //     this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
+      //   }
+      //   this.$axios('http://localhost:3000/messagereplys').then(res => {
+      //     this.messagereplyList = res.data.data;
+      //     console.log(this.messageList)
+      //     console.log(this.messagereplyList)
+      //   })
+      //     .catch(error =>{
+      //       console.log(error);
+      //     })
+      // })
+      //   .catch(error =>{
+      //     console.log(error);
+      //   });
 
     }
   }
@@ -223,7 +225,7 @@
     border-bottom: 1px solid;
   }
   .pages-view{
-    width: 65%;   
+    width: 100%;   
     margin: 0 auto;
     text-align: center;
   }
