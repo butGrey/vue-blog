@@ -94,9 +94,9 @@
 	      			if(res.data.code == 200){
 	                console.log('注册成功');
                     localStorage.setItem('user',$('input[name=name]').val());
-                    sessionStorage.setItem('user',$('input[name=name]').val());
-                    localStorage.setItem('avator',res.data);
-                    sessionStorage.setItem('avator',res.data);
+                    sessionStorage.setItem('user',$('input[name=name]').val());                    
+                    localStorage.setItem('avator',res.data.data);
+                    sessionStorage.setItem('avator',res.data.data);
                     this.$router.push({path:'/home'})
                     window.location.reload()
 	              }else{
