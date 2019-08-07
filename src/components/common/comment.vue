@@ -112,7 +112,7 @@
           }        
           var name = sessionStorage.getItem("user");  
           var avator = sessionStorage.getItem("avator"); 
-          debugger
+          
           $.ajax({
             url: that.postUrl,
             data: {
