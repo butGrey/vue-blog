@@ -8,8 +8,8 @@
 		</div>
 		<div class="comps">
 			<div>评论组件：</div>
-			<div>总评论数：{{commentlist}}</div>
-	    	<my-comment :commentlist="commentlist"> </my-comment>
+			<div>总评论数：{{messageList.length}}</div>
+	    	<my-comment :messageList="messageList" :messagereplyList="messagereplyList" :getUrl="getUrl" :getUrlre="getUrlre" :postUrl="postUrl"> </my-comment>
 		</div>
 	</div>
 </template>
@@ -33,11 +33,34 @@
 						// body...
 					}
 				},
-				commentlist:{}
+				messageList: [],
+				messagereplyList: [],
+		        getUrl: 'http://localhost:3000/messages',
+		        getUrlre: 'http://localhost:3000/messagereplys',
+		        postUrl: 'http://localhost:3000/message'				
 			}
 		},
-		methods:{
+		created() {	
+	      this.$axios(this.getUrl).then(res => {
+	        this.messageList = res.data.data;
+	        for(let i=0;i<this.messageList.length;i++){
+	          this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
+	        }
+	        this.$axios(this.getUrlre).then(res => {
+	          this.messagereplyList = res.data.data;
+	          console.log(this.messageList)
+	          console.log(this.messagereplyList)
+	        })
+	          .catch(error =>{
+	            console.log(error);
+	          })
+	      })
+	        .catch(error =>{
+	          console.log(error);
+	        });
 		},
+		methods:{
+		}
 	}
 </script>
 
