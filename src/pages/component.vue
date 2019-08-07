@@ -9,7 +9,7 @@
 		<div class="comps">
 			<div>评论组件：</div>
 			<div>总评论数：{{messageList.length}}</div>
-	    	<my-comment :messageList="messageList" :messagereplyList="messagereplyList" :getUrl="getUrl" :getUrlre="getUrlre" :postUrl="postUrl"> </my-comment>
+	    	<my-comment v-if="postUrl" :getUrl="getUrl" :getUrlre="getUrlre" :postUrl="postUrl"> </my-comment>
 		</div>
 	</div>
 </template>
@@ -41,23 +41,23 @@
 			}
 		},
 		created() {	
-	      this.$axios(this.getUrl).then(res => {
-	        this.messageList = res.data.data;
-	        for(let i=0;i<this.messageList.length;i++){
-	          this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
-	        }
-	        this.$axios(this.getUrlre).then(res => {
-	          this.messagereplyList = res.data.data;
-	          console.log(this.messageList)
-	          console.log(this.messagereplyList)
-	        })
-	          .catch(error =>{
-	            console.log(error);
-	          })
-	      })
-	        .catch(error =>{
-	          console.log(error);
-	        });
+	      // this.$axios(this.getUrl).then(res => {
+	      //   this.messageList = res.data.data;
+	      //   for(let i=0;i<this.messageList.length;i++){
+	      //     this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
+	      //   }
+	      //   this.$axios(this.getUrlre).then(res => {
+	      //     this.messagereplyList = res.data.data;
+	      //     console.log(this.messageList)
+	      //     console.log(this.messagereplyList)
+	      //   })
+	      //     .catch(error =>{
+	      //       console.log(error);
+	      //     })
+	      // })
+	      //   .catch(error =>{
+	      //     console.log(error);
+	      //   });
 		},
 		methods:{
 		}
