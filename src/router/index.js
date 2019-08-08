@@ -9,8 +9,11 @@ import Writing_Work from '@/pages/writing_work'
 import Writing_Life from '@/pages/writing_life'
 import Component from '@/pages/component'
 import Signin from '@/pages/signin'
+import Login from '@/pages/login'
 import Home from '@/pages/home'
 import AticleDetails from '@/pages/article_details'
+import Message_Boards from '@/pages/message_boards'
+import Timeaxises from '@/pages/time_axises'
 
 Vue.use(Router)
 
@@ -62,6 +65,11 @@ export default new Router({
       component: Signin
     },
     {
+      path: "/login",
+      name: "login",
+      component: Login
+    },
+    {
       path: '/home',
       name: 'Home',
       component: Home
@@ -70,6 +78,16 @@ export default new Router({
       path: '/article_details',
       name: "artdetails",
       component: AticleDetails
+    },
+    {
+      path: "/time_axises",
+      name: "time_axises",
+      component: Timeaxises
+    },
+    {
+      path: "/message_boards",
+      name: "message_boards",
+      component: Message_Boards
     }
   ]
 })
