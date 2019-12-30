@@ -3,7 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Axios from "axios"
+//import Axios from "axios"
+import Axios from '@/global/axios';
 import $ from 'jquery'
 import moment from 'moment'
 import './assets/iconfont/iconfont.js'
