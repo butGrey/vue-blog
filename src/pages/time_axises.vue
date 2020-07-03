@@ -10,10 +10,10 @@
 					<div v-if="articleList[key - 1]==undefined">
 						<div class="piece_year"></div>
 						<h2>{{ item.year}}</h2>
-					</div>						
+					</div>
 					<div class="piece_day"></div>
 					<span style="font-size: 14px;">{{item.month}}-{{item.day}}</span>
-					<router-link :to="{ path:'/article_details' , query: { key } }" class="a"><span>{{item.title}}</span></router-link>			
+					<router-link :to="{ path:'/article_details' , query: { key } }" class="a"><span>{{item.title}}</span></router-link>
 				</li>
 			</ul>
 		</div>
@@ -66,7 +66,7 @@
 	@media screen and (max-width: 1024px){
 		.pages-view{
 		    width: 100%!important;
-		    float: none;   
+		    float: none;
 		}
 	}
 	h2,span{
@@ -84,11 +84,11 @@
 		height: 100%;
 		margin: 10px auto;
 		padding: 10px 110px;
-		box-shadow: 1px 1px 10px #312f3a;
+		box-shadow: 1px 1px 10px #ccc;
 	    border-radius: 10px;
 	    background-color: #5a576f;
 	}
-	.timeline{	
+	.timeline{
 		text-align: left;
 		border-left: 1px solid #FFF;
 	}
@@ -97,7 +97,7 @@
 		margin: 30px auto;
 		font-size: 14px;
 		line-height: 36px;
-		border-bottom:1px dashed #FFF; 
+		border-bottom:1px dashed #FFF;
 	}
 	.piece_year{
 		position: absolute;

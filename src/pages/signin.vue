@@ -57,7 +57,7 @@
 			        		this.mesShow = false;
 		          			this.mes = '';
 
-			        	}			          
+			        	}
 			        })
 			          .catch(error =>{
 			            console.log(error);
@@ -83,18 +83,18 @@
 	      	}else if($('input[name=password]').val()!=$('input[name=repassword]').val()){
 	          alert('两次输入的密码不一致！')
 	     		return
-	      	}else if($('.avatorVal').val() == ''){	      		
+	      	}else if($('.avatorVal').val() == ''){
 	          alert('请上传头像！')
-	      	}else{	      			      		
+	      	}else{
 	      		this.$axios.post('http://localhost:3000/addbloguser',{
 	              name: $('[name=name]').val(),
 	              password: $('input[name=password]').val(),
-	              avator: $('.avatorVal').val() 			
-	      		}).then(res=>{	      			
+	              avator: $('.avatorVal').val()
+	      		}).then(res=>{
 	      			if(res.data.code == 200){
 	                console.log('注册成功');
                     localStorage.setItem('user',$('input[name=name]').val());
-                    sessionStorage.setItem('user',$('input[name=name]').val());                    
+                    sessionStorage.setItem('user',$('input[name=name]').val());
                     localStorage.setItem('avator',res.data.data);
                     sessionStorage.setItem('avator',res.data.data);
                     this.$router.push({path:'/home'})
@@ -154,7 +154,6 @@
 
 <style scoped>
     .signpage{
-    	background-color: #37324a;
     	height: calc(100vh - 0px);
     	width: calc(100vw + 10px);
     	display: flex;
@@ -213,7 +212,7 @@
 		background-color: rgba(255,255,255,.2);
 	}
 	.submit{
-		box-shadow: 1px 1px 5px #333333; 		
+		box-shadow: 1px 1px 5px #333333;
 	}
 	.cancle{
 		color: #ccc;
@@ -221,7 +220,7 @@
 	}
 	.btn:hover{
 		background-color: rgba(255,255,255,.2);
-		box-shadow: 2px 2px 10px #333333; 
+		box-shadow: 2px 2px 10px #333333;
 	}
 	.disable,.disable:hover{
 		box-shadow: none;
@@ -234,7 +233,6 @@
 	    top: 0px;
 	    left: 170px;
 	    text-align: center;
-	    position: absolute;
 	    overflow: hidden;
 	    z-index: 999;
 	  }

@@ -59,11 +59,11 @@
 	      	}else if($('input[name=password]').val().length<6){
 	          alert('密码长度不可低于6位！')
 	     		return
-	      	}else{	      		
+	      	}else{
 	      		this.$axios.post('http://localhost:3000/loginin',{
 	              name: $('[name=name]').val(),
-	              password: $('input[name=password]').val()	      			
-	      		}).then(res=>{	      			
+	              password: $('input[name=password]').val()
+	      		}).then(res=>{
 	      			if(res.data.code == 200){
 	                console.log('登录成功');
                     localStorage.setItem('user',$('input[name=name]').val());
@@ -85,7 +85,6 @@
 
 <style scoped>
     .page{
-    	background-color: #37324a;
     	height: calc(100vh - 0px);
     	width: calc(100vw + 10px);
     	display: flex;
@@ -143,7 +142,7 @@
 		background-color: rgba(255,255,255,.2);
 	}
 	.submit{
-		box-shadow: 1px 1px 5px #333333; 		
+		box-shadow: 1px 1px 5px #333333;
 	}
 	.cancle{
 		color: #ccc;
@@ -151,7 +150,7 @@
 	}
 	.btn:hover{
 		background-color: rgba(255,255,255,.2);
-		box-shadow: 2px 2px 10px #333333; 
+		box-shadow: 2px 2px 10px #333333;
 	}
 	.fileinput-button {
 		width: 150px;

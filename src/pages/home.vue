@@ -14,7 +14,6 @@
 					</svg>
 					<i class="art-time">{{item.moment}}</i>
 					<p class="art-content" v-html="item.content"><br /></p>
-					<!-- <router-link :to="{ name:'artdetail' , params: { item } }" class="button">~阅读全文~</router-link> -->
 					<router-link :to="{ path:'/article_details' , query: { key } }" class="button">~阅读全文~</router-link>
 				</div>
 			</div>
@@ -72,19 +71,19 @@
 	@media screen and (max-width: 1024px){
 		.pages-view{
 		    width: 100%!important;
-		    float: none;   
+		    float: none;
 		}
 	}
 	.page{
-		background-color: #37324a;
+		background-color: #fff;
 		height: calc(100vh - 0px);
 		width: calc(100vw + 20px);
 		display: inline-block;
 		overflow: scroll;
 	}
 	.pages-view{
-		width: 65%;		
-		color: #fff;
+		width: 65%;
+		color: #000;
 		margin: 120px auto;
 		text-align: center;
 		border-radius: 10px;
@@ -95,9 +94,9 @@
 		width: 90%;
 		height: 300px;
 		margin: 40px auto;
-	    box-shadow: 1px 1px 10px #312f3a;
+	    box-shadow: 1px 1px 10px #ccc;
 	    border-radius: 10px;
-	    background-color: #5a576f;
+	    background-color: #fff;
 	}
 	.day {
 	    float: left;
@@ -108,10 +107,10 @@
 	    height: 60px;
 	    border-radius: 50%;
 	    padding: 5px;
-	    color: #fff;
+	    color: #000;
 	    text-align: center;
 	    line-height: 30px;
-	    background-color: #5a576f;
+	    background-color: #fff;
 	    box-shadow: 1px 1px 4px #bbbbbb;
 	}
 	  .itime{
@@ -126,8 +125,8 @@
 		height: 25px;
 		margin-top: 6rem;
 		left: -14px;
-		background-color: #5a576f;
-		color: #fff;
+		background-color: #fff;
+		color: #bbb;
 		text-align: center;
 		line-height: 25px;
 		box-shadow: 0px 1px 3px #bbbbbb;
@@ -149,7 +148,7 @@
 		text-align: center;
 	}
 	.title .a{
-		color: #fff;
+		color: #000;
 	}
 	.art-content{
 		position:relative;
@@ -159,7 +158,7 @@
 		font-size: 14px;
 		line-height: 30px;
 		overflow: hidden;
-		color: #fff;
+		color: #000;
 	}
 	.art-content::after {
 		content: "\02026";
@@ -167,14 +166,14 @@
 		bottom:0;
 		right:0;
 		padding-left:40px;
-		background:-webkit-linear-gradient(left,transparent,#5a576f    55%);
-		background:-o-linear-gradient(right,transparent,#5a576f    55%);
-		background:-moz-linear-gradient(right,transparent,#5a576f  55%);
-		background:linear-gradient(to right,transparent,#5a576f  55%);
+		background:-webkit-linear-gradient(left,transparent,#bbb    55%);
+		background:-o-linear-gradient(right,transparent,#bbb    55%);
+		background:-moz-linear-gradient(right,transparent,#bbb  55%);
+		background:linear-gradient(to right,transparent,#bbb  55%);
 	}
 	.button{
 		font-size: 15px;
-		color: #fff;
+		color: #000;
 	}
   @media screen and (max-width: 768px){
     .art-content{

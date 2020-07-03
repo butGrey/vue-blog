@@ -50,7 +50,7 @@ export default {
   position: relative;
   text-align: center;
 }
-body{margin: 0;padding: 0;font-family: "Microsoft YaHei";background-color: #37324a;width: calc(100vw - 0px);}
+body{margin: 0;padding: 0;font-family: "Microsoft YaHei";background-color: #fff;width: calc(100vw - 0px);}
 body,html{-webkit-text-size-adjust: none;width: 100%;height: 100%;}
 *{text-decoration: none;list-style: none;}
 img{border: 0px;}
