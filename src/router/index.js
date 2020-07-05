@@ -26,8 +26,8 @@ export default new Router({
     },
     {
     	path: '/article_detail',
-    	name: "artdetail",
-    	component: AticleDetail
+    	name: "artdetails",
+    	component: AticleDetails
     },
     {
     	path: "/time_axis",
@@ -73,11 +73,6 @@ export default new Router({
       path: '/home',
       name: 'Home',
       component: Home
-    },
-    {
-      path: '/article_details',
-      name: "artdetails",
-      component: AticleDetails
     },
     {
       path: "/time_axises",

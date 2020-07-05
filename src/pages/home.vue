@@ -1,22 +1,24 @@
 <template>
 	<div class="page">
-		<div class="pages-view">
-			<div class="articles" v-for="(item,key) in currentArticleList">
-				<div class="day">
-					<p>{{item.moment.substring(5,7)}}月</p>
-					<p>{{item.moment.substring(8,10)}}日</p>
-				</div>
-				<div class="category">{{item.category}}</div>
-				<div class="contents">
-					<h2 class="title"><router-link :to="{ path:'/article_details' , query: { key } }" class="a">{{item.title}}</router-link></h2>
-					<svg class="icon itime" aria-hidden="true">
-					  <use xlink:href="#icon-shijian"></use>
-					</svg>
-					<i class="art-time">{{item.moment}}</i>
+		<div class="page-view">
+			<article class="articles" v-for="(item,index) in currentArticleList">
+				<div class="contents writing fl" :class="{'fr':index%2}">
+					<div class="title"><router-link :to="{ path:'/article_detail' , query: { id: item.id } }" class="a">{{item.title}}</router-link></div>
+          <div class="time">
+            <svg class="icon itime" aria-hidden="true">
+              <use xlink:href="#icon-shijian"></use>
+            </svg>
+            <i class="art-time">发布于 {{item.moment}}</i>
+          </div>
 					<p class="art-content" v-html="item.content"><br /></p>
-					<router-link :to="{ path:'/article_details' , query: { key } }" class="button">~阅读全文~</router-link>
+					<router-link :to="{ path:'/article_detail' , query: { id: item.id } }" class="more">
+            <i class="iconfont icon-shenglvehao"></i>
+          </router-link>
 				</div>
-			</div>
+        <a class="contents thumb fl" :class="{'fr':index%2}">
+          <img :src="'http://localhost:3000/images/'+item.img" alt="">
+        </a>
+			</article>
 	    	<my-pagination v-if="articleList.length>5" :pagination="pagination" v-on:page-change="pageNumChange"> </my-pagination>
 		</div>
 	</div>
@@ -36,13 +38,10 @@
 					type: 0,
 					pageNumChange: function (currentPage) {
 						console.log(currentPage);
-						//this.currentArticleList = this.articleList.slice(currentPage*5-5,currentPage*5);
 					},
 					pageUpdate: function (argument) {
-						// body...
 					},
 					pageOptionChange: function (argument) {
-						// body...
 					}
 				},
 			}
@@ -67,9 +66,9 @@
 	}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 	@media screen and (max-width: 1024px){
-		.pages-view{
+		.page-view{
 		    width: 100%!important;
 		    float: none;
 		}
@@ -80,24 +79,59 @@
 		width: calc(100vw + 20px);
 		display: inline-block;
 		overflow: scroll;
+    &-view{
+      width: 65%;
+      color: #000;
+      margin: 120px auto;
+      text-align: center;
+      border-radius: 10px;
+      .articles{
+        position: relative;
+        box-sizing: border-box;
+        width: 65%;
+        height: 300px;
+        margin: 40px auto;
+        box-shadow: 1px 1px 10px #ccc;
+        border-radius: 10px;
+        background-color: #fff;
+        transition: all .6s;
+        .contents{
+          height: 100%;
+          overflow: hidden;
+          color: #504e4e;
+          .title{
+            font-size: 24px;
+          }
+          .time{
+            color: #a9a9a9;
+          }
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            transition: all .6s;
+          }
+          .more{
+            float: left;
+            margin-left: 20px;
+            i{
+              font-size: 24px;
+              color: #525252;
+            }
+          }
+          .title a:hover,.more i:hover{
+            color: #ff6c00;
+          }
+        }
+        .writing{
+          width: 47%;
+          padding-top: 40px;
+        }
+      }
+    }
 	}
-	.pages-view{
-		width: 65%;
-		color: #000;
-		margin: 120px auto;
-		text-align: center;
-		border-radius: 10px;
-	}
-	.articles{
-		position: relative;
-		box-sizing: border-box;
-		width: 90%;
-		height: 300px;
-		margin: 40px auto;
-	    box-shadow: 1px 1px 10px #ccc;
-	    border-radius: 10px;
-	    background-color: #fff;
-	}
+
 	.day {
 	    float: left;
 	    position: absolute;
@@ -141,39 +175,27 @@
 	    border-bottom: 7px solid transparent;
 	    border-left: 7px solid transparent;
 	}
-	.contents{
-		padding: 20px;
-	}
-	.title{
-		text-align: center;
-	}
-	.title .a{
-		color: #000;
-	}
+  .thumb{
+    width: 53%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+  }
+  .articles:hover{
+    box-shadow: 0 5px 10px 5px rgba(110,110,110,.4);
+    img{
+      transform: scale(1.1);
+    }
+  }
 	.art-content{
 		position:relative;
 		max-height: 90px;
-		margin: 30px 30px 10px 30px;
+		margin: 20px;
 		text-align: left;
 		font-size: 14px;
 		line-height: 30px;
 		overflow: hidden;
-		color: #000;
-	}
-	.art-content::after {
-		content: "\02026";
-		position:absolute;
-		bottom:0;
-		right:0;
-		padding-left:40px;
-		background:-webkit-linear-gradient(left,transparent,#bbb    55%);
-		background:-o-linear-gradient(right,transparent,#bbb    55%);
-		background:-moz-linear-gradient(right,transparent,#bbb  55%);
-		background:linear-gradient(to right,transparent,#bbb  55%);
-	}
-	.button{
-		font-size: 15px;
-		color: #000;
+		color: #504e4e;
 	}
   @media screen and (max-width: 768px){
     .art-content{
@@ -182,5 +204,13 @@
     .articles{
       margin: 40px 0px 40px 30px;
     }
+  }
+  .fl{
+    float: left;
+    border-radius: 0 10px 10px 0;
+  }
+  .fr{
+    float: right;
+    border-radius: 10px 0 0 10px;
   }
 </style>

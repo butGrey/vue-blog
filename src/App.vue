@@ -71,7 +71,7 @@ h2{
 .pointer{cursor:pointer;}
 a,input,button{ outline:none; }
 ::-moz-focus-inner{border:0px;}
-a{color: #000;}
+a{color: #5a5a5a;}
 .wrapper{clear: both;width: 100%;}
 table { border-collapse:collapse; }
 word-break:break-all /*文字换行*/
@@ -79,7 +79,6 @@ word-break:break-all /*文字换行*/
 
 /*默认滚动条样式修改ie9 google Firefox 等高版本浏览器有效*/
 ::selection {background: #D03333;color: white;text-shadow: none;}
-/*::-webkit-scrollbar-track-piece{width:10px;background-color:#f2f2f2}*/
 ::-webkit-scrollbar{width:10px;height:6px}
 ::-webkit-scrollbar-thumb{height:50px;background-color:rgba(0,0,0,.3);}
 ::-webkit-scrollbar-thumb:hover{background:#CFCFCF}

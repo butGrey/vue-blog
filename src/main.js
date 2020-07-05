@@ -3,8 +3,8 @@ import App from './App'
 import router from './router'
 import Axios from '@/global/axios'
 import moment from 'moment'
-import './assets/iconfont/iconfont.js'
-import './assets/iconfont/iconfont.css'
+import '@/assets/iconfont/iconfont.js'
+import '@/assets/iconfont/iconfont.css'
 import MyPagination from "./common/pagination"
 import MyComment from "./common/comment"
 

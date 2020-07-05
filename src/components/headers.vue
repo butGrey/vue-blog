@@ -45,7 +45,7 @@
 
 <style scoped>
 	.header{
-    background: rgba(255,255,255);
+    background: rgba(255,255,255,.9);
 		width: 100%;
 		height: 50px;
 		line-height: 50px;

@@ -43,12 +43,12 @@
 	@media screen and (max-width: 1024px){
 		.pages-view{
 		    width: 100%!important;
-		    float: none;   
+		    float: none;
 		}
 	}
 	.pages-view{
-		width: 65%;		
-		margin: 0 auto;
+		width: 65%;
+		margin: 100px auto;
 		text-align: center;
 		border-radius: 10px;
 	}
@@ -60,6 +60,7 @@
 		margin: 40px auto;
     background-color: rgba(255,255,255,.5);
 		border-radius: 10px;
+    box-shadow: 1px 1px 10px #ccc;
 	}
 	.day {
     float: left;
