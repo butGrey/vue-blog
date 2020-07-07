@@ -100,18 +100,18 @@
           if(ci){
             if(rn){
               var content = this.recontents;
-            }else{              
+            }else{
               var content = this.recontent;
             }
-          }else{            
+          }else{
               var content = this.content;
           }
           if(content == ''){
             alert('请输入内容！')
             return
-          }        
-          var name = sessionStorage.getItem("user");  
-          var avator = sessionStorage.getItem("avator"); 
+          }
+          var name = sessionStorage.getItem("user");
+          var avator = sessionStorage.getItem("avator");
 
           $.ajax({
             url: that.postUrl,
@@ -166,15 +166,15 @@
       show(that){
         if($(that.currentTarget.nextElementSibling).css('display')=='block'){
           $(that.currentTarget.nextElementSibling).css('display','none');
-        }else{        
+        }else{
           $(".reform").css('display','none');
           $(that.currentTarget.nextElementSibling).css('display','block');
         }
       },
-      showReplay(that){ 
+      showReplay(that){
         if($(that.currentTarget.nextElementSibling.nextElementSibling.nextElementSibling).css('display')=='block'){
           $(that.currentTarget.nextElementSibling.nextElementSibling.nextElementSibling).css('display','none');
-        }else{        
+        }else{
           $(that.currentTarget.nextElementSibling.nextElementSibling.nextElementSibling).css('display','block');
         }
       }
@@ -197,7 +197,7 @@
                 }
               })
             })
-            console.log(this.messageList)          
+            console.log(this.messageList)
         })
           .catch(error =>{
             console.log(error);
@@ -211,15 +211,12 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   @media screen and (max-width: 1024px){
     .pages-view{
         width: 100%!important;
-        float: none;   
+        float: none;
     }
-  }
-  div,p,a,ul,li{
-    color: #fff;
   }
   .mb20{
     margin-bottom: 20px;
@@ -235,8 +232,8 @@
     right: 105px;
     top: 40px;
     width: 50px;
-    height: 26px;    
-    color: #ccc;
+    height: 26px;
+    color: #a9a9a9;
     margin-bottom: 10px;
     font-size: 12px;
     text-align: center;
@@ -245,23 +242,21 @@
     border-bottom: 1px solid;
   }
   .pages-view{
-    width: 100%;   
+    max-width: 1200px;
     margin: 0 auto;
     text-align: center;
   }
   .articles{
     position: relative;
     box-sizing: border-box;
-    width: 90%;
     margin: 0 auto;
     margin-bottom: 40px;
     border-radius: 10px;
-    background-color: #5a576f;
   }
   .textarea-inherit {
-    width: 89%;
+    width: 100%;
     overflow: auto;
-    border-radius: 5px;
+    border-radius: 2px;
     padding-left: 8px;
     }
   .information{
@@ -292,35 +287,32 @@
   }
   .submit{
     display: inline-block;
-    width: 32px;
-    height: 30px;    
+    width: 68px;
+    height: 30px;
     margin-bottom: 10px;
-    background-color: #5a576f;
     font-size: 12px;
     text-align: center;
     line-height: 30px;
-    color: #fff;
+    border: 1px solid #a9a9a9;
     cursor: pointer;
-    -webkit-box-shadow: 1px 1px 5px #888888;
-    box-shadow: 1px 1px 5px #888888;
   }
-  .submit2{
-    opacity: 0;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    transition: 2s;
+  .submit:hover{
+    color: #ff6c00;
+    border: 1px solid #ff6c00;
+  }
+  textarea:hover{
+    border: 1px solid #ff6c00;
   }
   .form_message{
     display: none;
   }
-  
+
   .count{
     width: 100%;
     height: 20px;
   }
   .count span{
     float: left;
-    color: #fff;
     font-size: 16px;
     font-weight: 600;
     font-family: Poiret One;
@@ -328,19 +320,21 @@
   .count p{
     float: left;
     width: 100%;
-    border: 1px dashed #fff;
+    border: 1px dashed #a9a9a9;
   }
   .mes{
     position: relative;
     width: 100%;
     height: 100%;
+    li{
+      border-bottom:1px solid rgba(0,0,0,.05);
+    }
   }
   .messagelist{
     position: relative;
     width: 100%;
     min-height: 85px;
     margin: 20px 0;
-    border-bottom:1px dashed #fff;
     padding-bottom: 10px;
   }
   .mes_people{
@@ -349,8 +343,8 @@
     margin-left: -60px;
   }
   .mes_people img{
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
   }
   .reply{
@@ -372,7 +366,6 @@
   .content{
     cursor: pointer;
     width: 90%;
-    color: #fff;
     text-align: left;
     line-height: 20px;
     margin-top: 5px;
@@ -380,44 +373,16 @@
   }
   .time{
     cursor: pointer;
-    color: #ccc;
+    color: #a9a9a9;
     font-weight: 400;
     font-size: 10px;
     float: right;
   }
-  .message2{
-    position: absolute;
-    transform: scaleY(0);
-    transition: 0s;
-  }
-  .mes_content:hover .message2 {
-    position: relative;
-    transform: scaleY(1);
-    transition: 0.5s;
-  }
-  .mes_content:hover .submit2 {
-    transition-delay: 0.3s;
-    opacity: 1;
-  }
   .img-avators {
     text-align: left;
   }
-  .img-avator{
-    text-align: left;
-    display: inline-block;
-    width: 100px;
-  }
   .img-avator input{
     vertical-align: top;
-  }
-  .userimg{
-    margin-top: 7px;
-  }
-  .preview{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 1px solid #fff;
   }
   @media screen and (max-width: 767px) {
     .mes_people{
@@ -434,14 +399,6 @@
     .information{
       width: 13rem;
     }
-    .img-avator{
-      width: 6.25rem;
-    }
-  }
-  .fileinput-button {
-    text-align: center;
-    position: relative;
-    overflow: hidden;
   }
   .fileinput-button input{
     position:absolute;

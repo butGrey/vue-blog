@@ -2,21 +2,13 @@
   <div class="pages-view">
     <div class="bg">
       <img :src="str+article.img" alt="">
+      <header class="header">
+        <div>{{article.title}}</div>
+        <p>{{article.category}}·<i class="art-time">{{article.moment}}</i></p>
+      </header>
     </div>
     <div class="articles">
-      <div class="day">
-        <p>{{article.month}}月</p>
-        <p>{{article.day}}日</p>
-      </div>
-      <div class="category">{{article.category}}</div>
-      <div class="contents">
-        <h2 class="title"><a href="">{{article.title}}</a></h2>
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-shijian"></use>
-        </svg>
-        <i class="art-time">{{article.moment}}</i>
-        <p class="art-content" v-html="article.content"><br/></p>
-      </div>
+      <p class="art-content" v-html="article.content"><br/></p>
     </div>
     <my-comment v-if="postUrl" :getUrl="getUrl" :getUrlre="getUrlre" :postUrl="postUrl"></my-comment>
   </div>
@@ -67,6 +59,7 @@
     }
   }
   .pages-view {
+    position: relative;
     margin: 0 auto;
     text-align: center;
     border-radius: 10px;
@@ -81,6 +74,28 @@
       img{
         width: 100%;
       }
+      .header{
+        position: absolute;
+        top: 280px;
+        left: 0;
+        right: 0;
+        color: #fff;
+        text-shadow: 2px 2px 10px #5a5a5a;
+        z-index: 1;
+        max-width: 800px;
+        padding: 0 10px;
+        text-align: left;
+        margin: 0 auto;
+        bottom: 20px;
+        height: 100px;
+        div{
+          font-size: 24px;
+        }
+        p{
+          color: #fff;
+          margin-top: 20px;
+        }
+      }
     }
   }
 
@@ -88,8 +103,7 @@
     position: relative;
     box-sizing: border-box;
     width: 90%;
-    margin: 40px auto;
-    background-color: #5a576f;
+    margin: 0 auto;
     border-radius: 10px;
   }
 
@@ -102,8 +116,6 @@
     height: 60px;
     border-radius: 50%;
     padding: 5px;
-    background-color: #5a576f;
-    color: #fff;
     text-align: center;
     line-height: 30px;
     box-shadow: 1px 1px 4px #bbbbbb;
@@ -120,8 +132,6 @@
     height: 25px;
     margin-top: 130px;
     left: -14px;
-    background-color: #5a576f;
-    color: #fff;
     text-align: center;
     line-height: 25px;
     box-shadow: 0px 1px 3px #bbbbbb;
@@ -147,13 +157,8 @@
 
   }
 
-  .title a {
-    color: #fff;
-  }
-
   .art-content {
     position: relative;
-    margin: 50px 30px 10px 30px;
     text-align: left;
     font-size: 14px;
     line-height: 30px;
@@ -180,7 +185,7 @@
   .articles {
     position: relative;
     box-sizing: border-box;
-    width: 90%;
+    max-width: 1200px;
     margin: 2.5rem auto;
     border-radius: 10px;
   }

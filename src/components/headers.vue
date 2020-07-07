@@ -4,7 +4,7 @@
 			<li style="font-size: 16px;"><router-link to="home">首页</router-link></li>
 			<li><router-link to="time_axises" class="button">时间轴</router-link></li>
 			<li><router-link :to="{ path:'/message_boards' }" class="button">留言板</router-link></li>
-			<li><router-link :to="{ path:'/component' }" class="button">组件</router-link></li>
+<!--			<li><router-link :to="{ path:'/component' }" class="button">组件</router-link></li>-->
 		</ul>
 		<ul class="login" v-if='!user'>
 			<li><router-link :to="{ path:'/login' }" class="button">登录</router-link></li>

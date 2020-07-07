@@ -13,7 +13,7 @@
 					</div>
 					<div class="piece_day"></div>
 					<span style="font-size: 14px;">{{item.month}}-{{item.day}}</span>
-					<router-link :to="{ path:'/article_details' , query: { key } }" class="a"><span>{{item.title}}</span></router-link>
+					<router-link :to="{ path:'/article_detail' , query: { id: item.id } }" class="a"><span>{{item.title}}</span></router-link>
 				</li>
 			</ul>
 		</div>
@@ -70,7 +70,7 @@
 		}
 	}
 	h2,span{
-		color: #FFF;
+		color: #a25b8b;
 	}
 	.pages-view{
 		width: 65%;
@@ -84,37 +84,36 @@
 		height: 100%;
 		margin: 10px auto;
 		padding: 10px 110px;
-		box-shadow: 1px 1px 10px #ccc;
-	    border-radius: 10px;
-	    background-color: #5a576f;
+		box-shadow: 4px 5px 10px #ccc;
+    border-radius: 10px;
 	}
 	.timeline{
 		text-align: left;
-		border-left: 1px solid #FFF;
+		border-left: 1px solid #a25b8b;
 	}
 	.timeline li{
 		padding: 0 30px;
 		margin: 30px auto;
 		font-size: 14px;
 		line-height: 36px;
-		border-bottom:1px dashed #FFF;
+		border-bottom:1px dashed #a25b8b;
 	}
 	.piece_year{
 		position: absolute;
 		left: 100px;
 		margin-top: 8px;
 		border-radius: 50%;
-		border: 10px solid #FFF;
+		border: 10px solid #a25b8b;
 	}
 	.piece_day{
 		position: absolute;
 		margin-top: 30px;
 		left: 105px;
 		border-radius: 50%;
-		border: 6px solid #FFF;
+		border: 6px solid #a25b8b;
 	}
   .timeline li a span:hover{
-    text-shadow: 0 0 0.2em #FFF, 0 0 0.1em #FFF;
+    text-shadow: 0 0 0.2em #a25b8b, 0 0 0.1em #a25b8b;
   }
   @media screen and (max-width: 767px) {
     .articles{

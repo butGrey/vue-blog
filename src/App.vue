@@ -54,8 +54,8 @@ body{margin: 0;padding: 0;font-family: "Microsoft YaHei";background-color: #fff;
 body,html{-webkit-text-size-adjust: none;width: 100%;height: 100%;}
 *{text-decoration: none;list-style: none;}
 img{border: 0px;}
-ul,li,dl,dd,dt,ol,p{list-style:none;font-size: 14px;padding: 0;margin: 0;}
-span,i{font-size: 12px;}
+ul,li,dl,dd,dt,ol,p{list-style:none;font-size: 14px;padding: 0;margin: 0;color:#5a5a5a;}
+i{font-size: 12px;}
 textarea,input {
   outline: none;
   font-family: "Microsoft YaHei";

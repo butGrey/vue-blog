@@ -12,7 +12,7 @@
 			return{
 		        getUrl: 'http://localhost:3000/messages',
 		        getUrlre: 'http://localhost:3000/messagereplys',
-		        postUrl: 'http://localhost:3000/message'				
+		        postUrl: 'http://localhost:3000/message'
 			}
 		},
 		created() {
@@ -23,9 +23,6 @@
 </script>
 
 <style scoped>
-	div,p,a,ul,li{
-		color: #fff;
-	}
 	.comp{
 		margin-top: 100px;
 	}
