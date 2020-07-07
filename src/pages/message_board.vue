@@ -18,7 +18,7 @@
             <div class="message">
               <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
             </div>
-            <div class="submit" id="submit1" v-on:click="mesSubmit('','',$event)">提交</div>
+            <div class="submit" id="submit1" @click="mesSubmit('','',$event)">提交</div>
           </div>
         </div>
 			</form>
@@ -55,7 +55,7 @@
                   <div class="message">
                     <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
                   </div>
-                  <div class="submit submit1" v-on:click="mesSubmit(item.id,'',$event)">提交</div>
+                  <div class="submit submit1" @click="mesSubmit(item.id,'',$event)">提交</div>
                 </div>
               </div>
             </form>
@@ -92,7 +92,7 @@
                         <div class="message">
                           <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit" id="message_textarea" name="content" rows="3"></textarea>
                         </div>
-                        <div class="submit submit1" v-on:click="mesSubmit(items.postid,item.name,$event)">提交</div>
+                        <div class="submit submit1" @click="mesSubmit(items.postid,item.name,$event)">提交</div>
                       </div>
                     </div>
                   </form>
@@ -124,7 +124,7 @@
 			return{
         messageList: [],
         messagereplyList: [],
-        str: 'http://localhost:3000/images/'
+        str: this.baseURL+'/images/'
 			}
 		},
     mounted(){
@@ -139,7 +139,7 @@
           alert('请上传头像！')
         }else{
           $.ajax({
-            url: 'http://localhost:3000/message',
+            url: this.baseURL+'/message',
             data: {
               name: $(event.currentTarget).siblings('input[name=name]').val(),
               content: $(event.currentTarget).siblings('.message').children('textarea[name=content]').val(),
@@ -169,13 +169,13 @@
       }
     },
     created () {
-      this.$axios('http://localhost:3000/messages').then(res => {
-        this.messageList = res.data.data;
+      this.$axios(this.baseURL+'/messages').then(res => {
+        this.messageList = res.data;
         for(let i=0;i<this.messageList.length;i++){
           this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
         }
-        this.$axios('http://localhost:3000/messagereplys').then(res => {
-          this.messagereplyList = res.data.data;
+        this.$axios(this.baseURL+'/messagereplys').then(res => {
+          this.messagereplyList = res.data;
         })
           .catch(error =>{
             console.log(error);
@@ -236,11 +236,11 @@
 	@media screen and (max-width: 1024px){
 		.pages-view{
 		    width: 100%!important;
-		    float: none;   
+		    float: none;
 		}
 	}
 	.pages-view{
-		width: 65%;		
+		width: 65%;
 		margin: 0 auto;
 		text-align: center;
 	}
@@ -304,7 +304,7 @@
   .form_message{
     display: none;
   }
-  
+
 	.count{
 		width: 100%;
 		height: 20px;

@@ -35,19 +35,19 @@
 				},
 				messageList: [],
 				messagereplyList: [],
-		        getUrl: 'http://localhost:3000/messages',
-		        getUrlre: 'http://localhost:3000/messagereplys',
-		        postUrl: 'http://localhost:3000/message'				
+		        getUrl: this.baseURL+'/messages',
+		        getUrlre: this.baseURL+'/messagereplys',
+		        postUrl: this.baseURL+'/message'
 			}
 		},
-		created() {	
+		created() {
 	      // this.$axios(this.getUrl).then(res => {
-	      //   this.messageList = res.data.data;
+	      //   this.messageList = res.data;
 	      //   for(let i=0;i<this.messageList.length;i++){
 	      //     this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
 	      //   }
 	      //   this.$axios(this.getUrlre).then(res => {
-	      //     this.messagereplyList = res.data.data;
+	      //     this.messagereplyList = res.data;
 	      //     console.log(this.messageList)
 	      //     console.log(this.messagereplyList)
 	      //   })

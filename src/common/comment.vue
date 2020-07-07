@@ -4,7 +4,7 @@
       <div class="message">
         <textarea v-model ="content" placeholder="something you want to say( ps: unable to delete ... )" class="textarea-inherit" name="content" rows="3"></textarea>
       </div>
-      <div class="submit" id="submit1" v-on:click="mesSubmit('','',$event)">提交</div>
+      <div class="submit" id="submit1" @click="mesSubmit('','',$event)">提交</div>
     </form>
 
     <div class="articles">
@@ -20,8 +20,8 @@
               <span class="user">{{item.name}}</span>
               <span class="time">{{item.moment}}</span>
             </div>
-            <div class="button" v-on:click="showReplay($event)">回复({{item.relen}})</div>
-            <div class="content" v-html="item.content" v-on:click="show($event)"></div>
+            <div class="button" @click="showReplay($event)">回复({{item.relen}})</div>
+            <div class="content" v-html="item.content" @click="show($event)"></div>
 
             <form method="post" class="form_message reform">
               <div class="img-avators">
@@ -29,7 +29,7 @@
                   <div class="message">
                     <textarea v-model ="recontent" placeholder="something you want to say( ps: unable to delete ... )" class="textarea-inherit" name="content" rows="3"></textarea>
                   </div>
-                  <div class="submit submit1" v-on:click="mesSubmit(item.id,'',$event)">回复</div>
+                  <div class="submit submit1" @click="mesSubmit(item.id,'',$event)">回复</div>
                 </div>
               </div>
             </form>
@@ -43,7 +43,7 @@
                     <span v-if='items.rpname'> 回复  @{{items.rpname}}</span>
                     <span class="time">{{items.moment}}</span>
                   </div>
-                  <div class="content" v-html="items.content" v-on:click="show($event)"></div>
+                  <div class="content" v-html="items.content" @click="show($event)"></div>
 
                   <form method="post" class="form_message reform">
                     <div class="img-avators">
@@ -51,7 +51,7 @@
                         <div class="message">
                           <textarea v-model ="recontents" placeholder="something you want to say( ps: unable to delete ... )" class="textarea-inherit" name="content" rows="3"></textarea>
                         </div>
-                        <div class="submit submit1" v-on:click="mesSubmit(items.postid,items.name,$event)">回复</div>
+                        <div class="submit submit1" @click="mesSubmit(items.postid,items.name,$event)">回复</div>
                       </div>
                     </div>
                   </form>
@@ -81,7 +81,7 @@
         recontents: '' ,
         messageList: [],
         messagereplyList: [],
-        str: 'http://localhost:3000/images/',
+        str: this.baseURL+'/images/',
       }
     },
     props: {
@@ -130,12 +130,12 @@
                 console.log('评论成功');
                 $(".reform").css('display','none');
                 that.$axios(that.getUrl).then(res => {
-                  that.messageList = res.data.data;
+                  that.messageList = res.data;
                   for(let i=0;i<that.messageList.length;i++){
                     that.messageList[i].moment = that.$moment(that.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
                   }
                   that.$axios(that.getUrlre).then(res => {
-                    that.messagereplyList = res.data.data;
+                    that.messagereplyList = res.data;
                     that.messageList.forEach(item=>{
                       item.relen = 0;
                       that.messagereplyList.forEach(x=>{
@@ -182,13 +182,13 @@
     created () {
       console.log('路由'+this.getUrl)
       this.$axios(this.getUrl).then(res => {
-        this.messageList = res.data.data;
+        this.messageList = res.data;
         for(let i=0;i<this.messageList.length;i++){
           this.messageList[i].moment = this.$moment(this.messageList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
         }
         console.log('回复路由'+this.getUrlre);
         this.$axios(this.getUrlre).then(res => {
-          this.messagereplyList = res.data.data;
+          this.messagereplyList = res.data;
             this.messageList.forEach(item=>{
               item.relen = 0;
               this.messagereplyList.forEach(x=>{

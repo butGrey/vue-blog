@@ -29,8 +29,8 @@
 			}
 		},
 		created () {
-      this.$axios('http://localhost:3000/articles').then(res => {
-				this.articleList = res.data.data;
+      this.$axios(this.baseURL+'/articles').then(res => {
+				this.articleList = res.data;
 			})
 			.catch(error =>{
 				console.log(error);

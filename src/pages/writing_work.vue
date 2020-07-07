@@ -34,7 +34,7 @@
 		},
 		created () {
 			this.$axios('/api/articleList').then(res => {
-				this.articleList = res.data.data;				
+				this.articleList = res.data;
 				for (var i = 0; i < this.articleList.length; i++) {
 					if(this.articleList[i].category=="始于梦想"){
 						this.articleWork.push(this.articleList[i]);
@@ -57,11 +57,11 @@
 	@media screen and (max-width: 1020px){
 		.pages-view{
 		    width: 100%!important;
-		    float: none;   
+		    float: none;
 		}
 	}
 	.pages-view{
-		width: 65%;		
+		width: 65%;
 		margin: 0 auto;
 		text-align: center;
 		border-radius: 10px;
@@ -122,7 +122,7 @@
 	}
 	.title{
 		text-align: center;
-		
+
 	}
 	.title .a{
 		color: #fb8183;
@@ -151,7 +151,7 @@
 		font-size: 15px;
 		font-weight: bold;
 		color: #26cac1;
-		border-right: 
+		border-right:
 	}
-	
+
 </style>

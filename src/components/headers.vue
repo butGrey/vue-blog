@@ -4,14 +4,14 @@
 			<li style="font-size: 16px;"><router-link to="home">首页</router-link></li>
 			<li><router-link to="time_axises" class="button">时间轴</router-link></li>
 			<li><router-link :to="{ path:'/message_boards' }" class="button">留言板</router-link></li>
-<!--			<li><router-link :to="{ path:'/component' }" class="button">组件</router-link></li>-->
+			<li><router-link :to="{ path:'/create' }" class="button">文章管理</router-link></li>
 		</ul>
 		<ul class="login" v-if='!user'>
 			<li><router-link :to="{ path:'/login' }" class="button">登录</router-link></li>
 			<li><router-link :to="{ path:'/signin' }" class="button">注册</router-link></li>
 		</ul>
 		<ul class="login" v-if='user'>
-			<li v-on:click="loginOut()">退出</li>
+			<li @click="loginOut()">退出</li>
 			<li>Hi，{{user}}！</li>
 			<li><img class="preview" alt="" :src= "avator"   alt=""></li>
 		</ul>
@@ -24,15 +24,13 @@
 		data(){
 			return{
 				user: sessionStorage.getItem('user')?sessionStorage.getItem('user'):'',
-				avator: sessionStorage.getItem('avator')?'http://localhost:3000/images/'+sessionStorage.getItem('avator'):''
+				avator: sessionStorage.getItem('avator')?this.baseURL+'/images/'+sessionStorage.getItem('avator'):''
 			}
 		},
 		mounted () {
 			},
 		methods:{
 			loginOut(){
-				localStorage.removeItem('user');
-				localStorage.removeItem('avator');
 				sessionStorage.removeItem('user');
 				sessionStorage.removeItem('avator');
 				this.user = '';

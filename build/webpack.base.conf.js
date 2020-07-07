@@ -3,12 +3,11 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-var webpack=require("webpack")
+var webpack = require("webpack")
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
-
 
 
 module.exports = {
@@ -65,19 +64,18 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      },{
+      }, {
         test: /\.scss$/,
         loaders: ['style', 'css', 'sass']
 
+      }, {
+        test: /.md$/,
+        use: 'text-loader',
       }
     ]
   },
   node: {
-    // prevent webpack from injecting useless setImmediate polyfill because Vue
-    // source contains it (although only uses it if it's native).
     setImmediate: false,
-    // prevent webpack from injecting mocks to Node native modules
-    // that does not make sense for the client
     dgram: 'empty',
     fs: 'empty',
     net: 'empty',

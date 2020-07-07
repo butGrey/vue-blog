@@ -10,10 +10,10 @@
 					<div v-if="articleList[key - 1]==undefined">
 						<div class="piece_year"></div>
 						<h2>{{ item.year}}</h2>
-					</div>						
+					</div>
 					<div class="piece_day"></div>
 					<span style="font-size: 14px;">{{item.month}}-{{item.day}}</span>
-					<router-link :to="{ path:'/article_detail' , query: { item } }" class="a"><span>{{item.title}}</span></router-link>			
+					<router-link :to="{ path:'/article_detail' , query: { item } }" class="a"><span>{{item.title}}</span></router-link>
 				</li>
 			</ul>
 		</div>
@@ -47,8 +47,8 @@
 			}
 		},
 		created () {
-			this.$axios('http://localhost:3000/articles').then(res => {
-				this.articleList = res.data.data;
+			this.$axios(this.baseURL+'/articles').then(res => {
+				this.articleList = res.data;
         for(var i=0;i<this.articleList.length;i++){
           this.articleList[i].year = this.$moment(this.articleList[i].moment).year();
           this.articleList[i].month = this.$moment(this.articleList[i].moment).month()+1;
@@ -66,7 +66,7 @@
 	@media screen and (max-width: 1024px){
 		.pages-view{
 		    width: 100%!important;
-		    float: none;   
+		    float: none;
 		}
 	}
 	.pages-view{
@@ -84,7 +84,7 @@
 		border-radius: 10px;
 		padding: 10px 110px;
 	}
-	.timeline{	
+	.timeline{
 		text-align: left;
 		border-left: 1px solid #FFD9C9;
 	}
@@ -93,7 +93,7 @@
 		margin: 30px auto;
 		font-size: 14px;
 		line-height: 36px;
-		border-bottom:1px dashed #FFD9C9; 
+		border-bottom:1px dashed #FFD9C9;
 	}
 	.piece_year{
 		position: absolute;

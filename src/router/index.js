@@ -14,7 +14,7 @@ import Home from '@/pages/home'
 import AticleDetails from '@/pages/article_details'
 import Message_Boards from '@/pages/message_boards'
 import Timeaxises from '@/pages/time_axises'
-
+import CreateArt from '@/pages/createArt'
 Vue.use(Router)
 
 export default new Router({
@@ -83,6 +83,11 @@ export default new Router({
       path: "/message_boards",
       name: "message_boards",
       component: Message_Boards
+    },
+    {
+      path: "/create",
+      name: "create",
+      component: CreateArt
     }
   ]
 })

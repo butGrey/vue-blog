@@ -16,10 +16,10 @@
           </router-link>
 				</div>
         <a class="contents thumb fl" :class="{'fr':index%2}">
-          <img :src="'http://localhost:3000/images/'+item.img" alt="">
+          <img :src="baseURL+'/images/'+item.img" alt="">
         </a>
 			</article>
-	    	<my-pagination v-if="articleList.length>5" :pagination="pagination" v-on:page-change="pageNumChange"> </my-pagination>
+	    	<my-pagination v-if="articleList.length>5" :pagination="pagination" @page-change="pageNumChange"> </my-pagination>
 		</div>
 	</div>
 </template>
@@ -46,10 +46,10 @@
 				},
 			}
 		},
-		created () {
-	      this.$axios('http://localhost:3000/articles').then(res => {
-					this.pagination.totalItems = Math.ceil(res.data.data.length/5);
-					this.articleList = res.data.data;
+		mounted () {
+	      this.$axios(this.baseURL+'/articles').then(res => {
+					this.pagination.totalItems = Math.ceil(res.data.length/5);
+					this.articleList = res.data;
 					this.currentArticleList = this.articleList.slice(0,5);
 				})
 				.catch(error =>{
@@ -60,9 +60,7 @@
 			pageNumChange: function (currentPage) {
 				this.currentArticleList = this.articleList.slice( currentPage*5-5, currentPage*5);
 			}
-		},
-		mounted(){
-        }
+		}
 	}
 </script>
 

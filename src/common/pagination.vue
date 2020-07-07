@@ -3,24 +3,24 @@
 		<div v-if='pagination.totalItems>1'
 				onselectstart="return false;" >
 			<ul class="page">
-				<li class="square borders" v-on:click="pageNumChange(pagination.currentPage-1);$emit('page-change', pagination.currentPage)"><</li>
-				<li class="square" 
-					v-on:click="pageNumChange(1);$emit('page-change', pagination.currentPage)" 
+				<li class="square borders" @click="pageNumChange(pagination.currentPage-1);$emit('page-change', pagination.currentPage)"><</li>
+				<li class="square"
+					@click="pageNumChange(1);$emit('page-change', pagination.currentPage)"
 					:class="pagination.currentPage==1?'actives':''">1</li>
 				<li class="dot" v-show='befordot'>...</li>
-				<li class="square" 
-					v-for="(item,index) in pages" 
-					v-on:click="pageNumChange(item);$emit('page-change', pagination.currentPage)"
+				<li class="square"
+					v-for="(item,index) in pages"
+					@click="pageNumChange(item);$emit('page-change', pagination.currentPage)"
 					:class="pagination.currentPage==item?'actives':''">{{item}}</li>
 				<li class="dot" v-show='afterdot'>...</li>
-				<li class="square" 
-					v-on:click="pageNumChange(pagination.totalItems);$emit('page-change', pagination.currentPage)" 
+				<li class="square"
+					@click="pageNumChange(pagination.totalItems);$emit('page-change', pagination.currentPage)"
 					:class="pagination.currentPage==pagination.totalItems?'actives':''">{{pagination.totalItems}}</li>
-				<li class="square borders" v-on:click="pageNumChange(pagination.currentPage+1);$emit('page-change', pagination.currentPage)">></li>
+				<li class="square borders" @click="pageNumChange(pagination.currentPage+1);$emit('page-change', pagination.currentPage)">></li>
 			</ul>
 			<span class="totle">共{{pagination.totalItems}}页</span>
 			<input type="" name="" oninput="value=value.replace(/[^\d]/g,'')" v-model="gopage">
-			<div class="jump" v-on:click="pageNumChange(gopage);$emit('page-change', pagination.currentPage)">GO</div>
+			<div class="jump" @click="pageNumChange(gopage);$emit('page-change', pagination.currentPage)">GO</div>
 		</div>
 	</div>
 </template>
@@ -30,7 +30,7 @@
 		name:"pagination",
 		data(){
 			return{
-				pages: [], 
+				pages: [],
 				initpages: [],
 				gopage: 1,
 				befordot: false,
@@ -70,10 +70,10 @@
 						}else if(currentPage<=this.pagination.totalItems&&currentPage>=this.pagination.totalItems-3){
 							this.befordot = true;
 							this.afterdot = false;
-							this.pages=[this.pagination.totalItems-5,this.pagination.totalItems-4,this.pagination.totalItems-3,this.pagination.totalItems-2,this.pagination.totalItems-1];		
+							this.pages=[this.pagination.totalItems-5,this.pagination.totalItems-4,this.pagination.totalItems-3,this.pagination.totalItems-2,this.pagination.totalItems-1];
 						}
 					}
-				}	
+				}
 				return currentPage;
 			},
 		},

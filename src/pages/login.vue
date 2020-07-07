@@ -7,13 +7,13 @@
       </div>
       <div class="input">
         <div>用户名:</div>
-        <input type="" name="name" v-model="name" placeholder="请输入用户名" @blur="getAvator(name)">
+        <input v-model="name" placeholder="请输入用户名" @keyup="getAvator()">
       </div>
       <div class="input">
         <div>密码：</div>
-        <input type="password" name="password" v-model="password" placeholder="请输入密码">
+        <input type="password" v-model="password" placeholder="请输入密码">
       </div>
-      <div class="btn submit" v-on:click="mesSubmit('','',$event)">登录</div>
+      <div class="btn submit" @click="mesSubmit('','',$event)">登录</div>
       <div class="btn cancle">取消</div>
     </form>
   </div>
@@ -26,45 +26,46 @@
         imgUrl: require('../assets/img/auto.jpg'),
         name: '',
         password: '',
-        str: 'http://localhost:3000/images/',
+        str: this.baseURL+'/images/',
         avator: ''
       }
     },
+    mounted(){
+      this.getAvator()
+    },
     methods: {
-      getAvator(name) {
-        if (name == '') {
+      getAvator() {
+        if (this.name == '') {
           return
         } else {
-          this.$axios('http://localhost:3000/getavator/' + name).then(res => {
-            this.avator = res.data.data || '';
+          this.$axios(this.baseURL+'/getavator/' + this.name).then(res => {
+            this.avator = res.data || '';
           }).catch(error => {
               console.log(error);
             })
         }
       },
-      mesSubmit(ci, rn, event) {
-        if ($('input[name=name]').val().trim() == '') {
+      mesSubmit() {
+        if (this.name.trim() == '') {
           alert('请输入用户名！')
           return
-        } else if ($('input[name=name]').val().match(/[<'">]/g)) {
+        } else if (this.name.match(/[<'">]/g)) {
           alert('请输入合法字符！')
           return
-        } else if ($('input[name=password]').val().trim() == '') {
+        } else if (this.password.trim() == '') {
           alert('请输入密码！')
           return
-        } else if ($('input[name=password]').val().length < 6) {
+        } else if (this.password.length < 6) {
           alert('密码长度不可低于6位！')
           return
         } else {
-          this.$axios.post('http://localhost:3000/loginin', {
-            name: $('[name=name]').val(),
-            password: $('input[name=password]').val()
+          this.$axios.post(this.baseURL+'/loginin', {
+            name: this.name,
+            password: this.password
           }).then(res => {
-            if (res.data.code == 200) {
+            if (res.code == 200) {
               console.log('登录成功');
-              localStorage.setItem('user', $('input[name=name]').val());
-              sessionStorage.setItem('user', $('input[name=name]').val());
-              localStorage.setItem('avator', this.avator);
+              sessionStorage.setItem('user', this.name);
               sessionStorage.setItem('avator', this.avator);
               this.$router.push({path: '/home'})
               window.location.reload()

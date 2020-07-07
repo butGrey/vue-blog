@@ -35,7 +35,7 @@
             <div class="message">
               <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit message_textarea" name="content" rows="3"></textarea>
             </div>
-            <div class="submit" id="submit1" v-on:click="mesSubmit(article.id,'','',$event)">提交</div>
+            <div class="submit" id="submit1" @click="mesSubmit(article.id,'','',$event)">提交</div>
           </div>
         </div>
       </form>
@@ -78,7 +78,7 @@
                   <div class="message">
                     <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit message_textarea" name="content" rows="3"></textarea>
                   </div>
-                  <div class="submit submit1" v-on:click="mesSubmit(article.id,item.id,'',$event)">提交</div>
+                  <div class="submit submit1" @click="mesSubmit(article.id,item.id,'',$event)">提交</div>
                 </div>
               </div>
             </form>
@@ -109,7 +109,7 @@
                         <div class="message">
                           <textarea placeholder="something you want to say( ps: unable to delete or reply ... )" class="textarea-inherit message_textarea" name="content" rows="3"></textarea>
                         </div>
-                        <div class="submit submit1" v-on:click="mesSubmit(article.id,item.id,items.name,$event)">提交</div>
+                        <div class="submit submit1" @click="mesSubmit(article.id,item.id,items.name,$event)">提交</div>
                       </div>
                     </div>
                   </form>
@@ -135,7 +135,7 @@
           article: {},
           commentList: [],
           commentreplyList:[],
-          str: 'http://localhost:3000/images/'
+          str: this.baseURL+'/images/'
 		    }
   		},
   		mounted() {
@@ -193,7 +193,7 @@
                alert('请上传头像！')
              }else{
                $.ajax({
-                 url: 'http://localhost:3000/article_detail/' + id,
+                 url: this.baseURL+'/article_detail/' + id,
                  data: {
                    name: $(event.currentTarget).siblings('input[name=name]').val(),
                    content: $(event.currentTarget).siblings('.message').children('textarea[name=content]').val(),
@@ -222,19 +222,19 @@
 	  		 }
   		},
     created () {
-      this.$axios('http://localhost:3000/articles').then(res => {
+      this.$axios(this.baseURL+'/articles').then(res => {
         this.key = this.$route.query.key;
-        this.article = res.data.data[this.key];
+        this.article = res.data[this.key];
         this.article.day = this.$moment(this.article.moment).date();
         this.article.month = this.$moment(this.article.moment).month()+1;
         console.log(this.article.moment);
-        this.$axios('http://localhost:3000/comments/' + this.article.id).then(res => {
-          this.commentList = res.data.data;
+        this.$axios(this.baseURL+'/comments/' + this.article.id).then(res => {
+          this.commentList = res.data;
           for(let i=0;i<this.commentList.length;i++){
             this.commentList[i].moment = this.$moment(this.commentList[i].moment, "YYYY-MM-DD HH:mm:ss").fromNow();
           }
-          this.$axios('http://localhost:3000/commentreplys/' + this.article.id).then(res => {
-            this.commentreplyList = res.data.data;
+          this.$axios(this.baseURL+'/commentreplys/' + this.article.id).then(res => {
+            this.commentreplyList = res.data;
           })
             .catch(error =>{
               console.log(error);
@@ -298,11 +298,11 @@
 	@media screen and (max-width: 1020px){
 		.pages-view{
 		    width: 100%!important;
-		    float: none;   
+		    float: none;
 		}
 	}
 	.pages-view{
-		width: 65%;		
+		width: 65%;
 		margin: 0 auto;
 		text-align: center;
 		border-radius: 10px;
@@ -369,7 +369,7 @@
 	}
 	.title{
 		text-align: center;
-		
+
 	}
 	.title a{
 		color: #fb8183;

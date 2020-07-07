@@ -47,8 +47,8 @@
 			}
 		},
 		created () {
-			this.$axios('http://localhost:3000/articles').then(res => {
-				this.articleList = res.data.data;
+			this.$axios(this.baseURL+'/articles').then(res => {
+				this.articleList = res.data;
         for(var i=0;i<this.articleList.length;i++){
           this.articleList[i].year = this.$moment(this.articleList[i].moment).year();
           this.articleList[i].month = this.$moment(this.articleList[i].moment).month()+1;

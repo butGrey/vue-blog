@@ -1,4 +1,4 @@
-<template>		
+<template>
 	<div class="sidebar" v-if="show">
 		<div class="contact">
 			<img src="../assets/img/t2.jpeg" alt="">
@@ -13,11 +13,11 @@
 		</div>
 		<div class="star">
 			<h2 class="ft1">do you like me ?</h2>
-			<i class="iconfont icon-zan" v-on:click.once="count+=1"></i>
+			<i class="iconfont icon-zan" @click.once="count+=1"></i>
 			<h2>{{count}}</h2>
 		</div>
 		<div class="close">
-			<p class="ft1" v-on:click="show_hidden">close the sidebar</p>
+			<p class="ft1" @click="show_hidden">close the sidebar</p>
 		</div>
 	</div>
 
@@ -73,7 +73,7 @@
 			show_hidden(){
 				this.show = !this.show;
 			}
-		}			
+		}
 	}
 </script>
 

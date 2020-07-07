@@ -8,7 +8,7 @@
       </div>
       <div class="input">
         <div>用户名:</div>
-        <input type="" name="name" placeholder="请输入用户名" v-model='name' v-on:blur="getAvator(name)">
+        <input type="" name="name" placeholder="请输入用户名" v-model='name' @keyup="getAvator(name)">
         <span class="tips" v-show="mesShow">{{mes}}</span>
       </div>
       <div class="input">
@@ -19,8 +19,8 @@
         <div>确认密码：</div>
         <input type="password" name="repassword" placeholder="请输入确认密码" v-model='repassword'>
       </div>
-      <div class="btn submit" :class="{'disable':mesShow}" v-on:click="mesSubmit('','',$event)">提交</div>
-      <div class="btn cancle" v-on:click="mesCancle()">取消</div>
+      <div class="btn submit submitBtn" :class="{'disable':mesShow}" @click="mesSubmit('','',$event)">提交</div>
+      <div class="btn cancle submitBtn" @click="mesCancle()">取消</div>
     </form>
   </div>
 </template>
@@ -47,17 +47,15 @@
           this.mes = '请输入合法字符！';
           return
         } else {
-          this.$axios('http://localhost:3000/checkusername/' + this.name).then(res => {
-            if (res.data && res.data.code == '200') {
+          this.$axios(this.baseURL+'/checkusername/' + this.name).then(res => {
+            if (res && res.code == '200') {
               this.mesShow = true;
               this.mes = '用户名已存在，请重新输入！';
             } else {
               this.mesShow = false;
               this.mes = '';
-
             }
-          })
-            .catch(error => {
+          }).catch(error => {
               console.log(error);
             })
         }
@@ -84,17 +82,15 @@
         } else if ($('.avatorVal').val() == '') {
           alert('请上传头像！')
         } else {
-          this.$axios.post('http://localhost:3000/addbloguser', {
+          this.$axios.post(this.baseURL+'/addbloguser', {
             name: $('[name=name]').val(),
             password: $('input[name=password]').val(),
             avator: $('.avatorVal').val()
           }).then(res => {
-            if (res.data.code == 200) {
+            if (res.code == 200) {
               console.log('注册成功');
-              localStorage.setItem('user', $('input[name=name]').val());
               sessionStorage.setItem('user', $('input[name=name]').val());
-              localStorage.setItem('avator', res.data.data);
-              sessionStorage.setItem('avator', res.data.data);
+              sessionStorage.setItem('avator', res.data);
               this.$router.push({path: '/home'})
               window.location.reload()
             } else {
@@ -182,7 +178,7 @@
     width: 80px;
     display: inline-block;
     font-size: 16px;
-    color: #ccc;
+    color: #5a5a5a;
     text-align: right;
     margin: 10px;
   }
@@ -192,10 +188,9 @@
     background: none;
     box-shadow: none;
     border-bottom: 1px solid #ccc;
-    width: 370px;
+    width: 250px;
     height: 45px;
     font-size: 16px;
-    color: #ccc;
     padding-left: 10px;
   }
 
@@ -209,25 +204,27 @@
     cursor: pointer;
     display: inline-block;
     margin: 20px;
-    width: 150px;
-    height: 40px;
-    line-height: 40px;
-    color: #ccc;
+    width: 100px;
+    height: 36px;
+    line-height: 36px;
     background-color: rgba(255, 255, 255, .2);
   }
-
-  .submit {
-    box-shadow: 1px 1px 5px #333333;
+  .submitBtn:hover {
+    color: #ff6c00;
+    border: 1px solid #ff6c00;
+  }
+  .submitBtn {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 12px;
+    text-align: center;
+    border: 1px solid #a9a9a9;
+    cursor: pointer;
   }
 
   .cancle {
     color: #ccc;
     background-color: rgba(255, 255, 255, .1);
-  }
-
-  .btn:hover {
-    background-color: rgba(255, 255, 255, .2);
-    box-shadow: 2px 2px 10px #333333;
   }
 
   .disable, .disable:hover {
@@ -254,12 +251,10 @@
     -ms-filter: 'alpha(opacity=0)';
     font-size: 200px;
   }
-
   .tips {
     position: absolute;
-    right: 23px;
+    width: 250px;
+    color: red;
     bottom: 12px;
-    color: #fff;
-    border: 1px solid;
   }
 </style>

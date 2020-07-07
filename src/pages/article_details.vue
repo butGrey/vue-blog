@@ -19,7 +19,7 @@
       return {
         key: 0,
         article: {},
-        str: 'http://localhost:3000/images/',
+        str: this.baseURL+'/images/',
         getUrl: '',
         getUrlre: '',
         postUrl: ''
@@ -28,14 +28,14 @@
     },
     methods: {},
     mounted() {
-      this.$axios.get('http://localhost:3000/getArticleDetail/' + this.$route.query.id).then(res => {
-        this.article = res.data.data;
+      this.$axios.get(this.baseURL+'/getArticleDetail/' + this.$route.query.id).then(res => {
+        this.article = res.data;
         this.article.day = this.$moment(this.article.moment).date();
         this.article.month = this.$moment(this.article.moment).month() + 1;
         console.log(this.article.moment);
-        this.getUrl = 'http://localhost:3000/comments/' + this.$route.query.id;
-        this.getUrlre = 'http://localhost:3000/commentreplys/' + this.$route.query.id;
-        this.postUrl = 'http://localhost:3000/article_detail/' + this.$route.query.id;
+        this.getUrl = this.baseURL+'/comments/' + this.$route.query.id;
+        this.getUrlre = this.baseURL+'/commentreplys/' + this.$route.query.id;
+        this.postUrl = this.baseURL+'/article_detail/' + this.$route.query.id;
       })
         .catch(error => {
           console.log(error);

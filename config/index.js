@@ -11,15 +11,15 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {  //使用"/api"来代替http://localhost:3000
-        target: 'http://localhost:3000', //源地址
+      '/': {  // http://localhost:3000 http://59.110.174.192
+        // target: 'http://59.110.174.192:3000',
+        target: 'http://localhost:3000',
         changeOrigin: true, //改变源
         pathRewrite: {
-          '^/api': '' //路径重写
+          '^/': 'http://localhost:3000' //路径重写
         }
       }
     },
-
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -28,7 +28,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
