@@ -46,6 +46,7 @@
         }
       },
       mesSubmit() {
+        const _this = this;
         if (this.name.trim() == '') {
           alert('请输入用户名！')
           return
@@ -60,18 +61,16 @@
           return
         } else {
           this.$axios.post(this.baseURL+'/loginin', {
-            name: this.name,
-            password: this.password
+            name: _this.name,
+            password: _this.password
           }).then(res => {
             if (res.code == 200) {
-              console.log('登录成功');
-              sessionStorage.setItem('user', this.name);
-              sessionStorage.setItem('avator', this.avator);
-              this.$router.push({path: '/home'})
-              window.location.reload()
+              sessionStorage.setItem('user', _this.name);
+              sessionStorage.setItem('avator', _this.avator);
+              this.$router.go(-1);
             } else {
               alert('用户名或密码错误！');
-              this.password = '';
+              _this.password = '';
             }
           })
         }

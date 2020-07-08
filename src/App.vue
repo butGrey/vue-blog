@@ -1,25 +1,15 @@
 <template>
   <div id="app">
-    <!-- <Headers />
-      <div id="cont">
-        <Tree />
-        <Sidebar />
-        <router-view/>
-      </div>
-    <Footers /> -->
     <Headers />
     <router-view/>
   </div>
 </template>
 
 <script>
-
-import Header from "./components/header"
 import Footers from "./components/footer"
 import Sidebar from "./components/sidebar"
 import Tree from "./components/tree"
-import Headers from "./components/headers"
-
+import Headers from "./components/header"
 
 export default {
   name: 'App',

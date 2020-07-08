@@ -10,9 +10,9 @@
 		name: "message_boards",
 		data(){
 			return{
-		        getUrl: this.baseURL+'/messages',
-		        getUrlre: this.baseURL+'/messagereplys',
-		        postUrl: this.baseURL+'/message'
+        getUrl: this.baseURL+'/messages',
+        getUrlre: this.baseURL+'/messagereplys',
+        postUrl: this.baseURL+'/message'
 			}
 		},
 		created() {
@@ -28,8 +28,5 @@
 	}
 	.comps{
 		margin: 20px;
-	}
-	.comps div{
-		margin: 10px;
 	}
 </style>

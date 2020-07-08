@@ -3,7 +3,7 @@
 		<div class="page-view">
 			<article class="articles" v-for="(item,index) in currentArticleList">
 				<div class="contents writing fl" :class="{'fr':index%2}">
-					<div class="title"><router-link :to="{ path:'/article_detail' , query: { id: item.id } }" class="a">{{item.title}}</router-link></div>
+					<div class="title"><router-link :to="{ path:'/articleDetail' , query: { id: item.id } }" class="a">{{item.title}}</router-link></div>
           <div class="time">
             <svg class="icon itime" aria-hidden="true">
               <use xlink:href="#icon-shijian"></use>
@@ -47,14 +47,15 @@
 			}
 		},
 		mounted () {
-	      this.$axios(this.baseURL+'/articles').then(res => {
-					this.pagination.totalItems = Math.ceil(res.data.length/5);
-					this.articleList = res.data;
-					this.currentArticleList = this.articleList.slice(0,5);
-				})
-				.catch(error =>{
-					console.log(error);
-				})
+		  const _this = this;
+      this.$axios(this.baseURL+'/articles').then(res => {
+        _this.pagination.totalItems = Math.ceil(res.data.length/5);
+        _this.articleList = res.data;
+        _this.currentArticleList = this.articleList.slice(0,5);
+      })
+      .catch(error =>{
+        console.log(error);
+      })
 		},
 		methods:{
 			pageNumChange: function (currentPage) {

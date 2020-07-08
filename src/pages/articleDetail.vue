@@ -1,15 +1,13 @@
 <template>
-  <div class="pages-view">
+  <div class="articleView">
     <div class="bg">
-      <img :src="str+article.img" alt="">
+      <img :src="src" alt="">
       <header class="header">
         <div>{{article.title}}</div>
         <p>{{article.category}}·<i class="art-time">{{article.moment}}</i></p>
       </header>
     </div>
-    <div class="articles">
-      <p class="art-content" v-html="article.content"><br/></p>
-    </div>
+    <article class="markdown-body" v-html="article.content"></article>
     <my-comment v-if="postUrl" :getUrl="getUrl" :getUrlre="getUrlre" :postUrl="postUrl"></my-comment>
   </div>
 </template>
@@ -17,51 +15,40 @@
   export default {
     data() {
       return {
-        key: 0,
         article: {},
-        str: this.baseURL+'/images/',
+        src: '',
         getUrl: '',
         getUrlre: '',
         postUrl: ''
-
       }
     },
-    methods: {},
     mounted() {
       this.$axios.get(this.baseURL+'/getArticleDetail/' + this.$route.query.id).then(res => {
         this.article = res.data;
-        this.article.day = this.$moment(this.article.moment).date();
-        this.article.month = this.$moment(this.article.moment).month() + 1;
-        console.log(this.article.moment);
+        this.src = this.baseURL+'/images/'+res.data.img;
         this.getUrl = this.baseURL+'/comments/' + this.$route.query.id;
         this.getUrlre = this.baseURL+'/commentreplys/' + this.$route.query.id;
         this.postUrl = this.baseURL+'/article_detail/' + this.$route.query.id;
-      })
-        .catch(error => {
+      }).catch(error => {
           console.log(error);
-        })
-    }
-  }
-  window.show = function (event, that) {
-    if ($(that).next('form').css('display') == 'block') {
-      $(that).next('form').css('display', 'none');
-    } else {
-      $(that).next('form').css('display', 'block');
+        });
     }
   }
 </script>
 
 <style scoped lang="scss">
   @media screen and (max-width: 1020px) {
-    .pages-view {
+    .articleView {
       width: 100% !important;
       float: none;
     }
   }
-  .pages-view {
+  .pages-view{
+    width: 800px;
+  }
+  .articleView {
     position: relative;
     margin: 0 auto;
-    text-align: center;
     border-radius: 10px;
     .bg{
       overflow: hidden;
@@ -73,6 +60,9 @@
       height: 400px;
       img{
         width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
       }
       .header{
         position: absolute;
@@ -96,6 +86,11 @@
           margin-top: 20px;
         }
       }
+    }
+    article{
+      margin: 20px auto;
+      padding: 20px 0 40px 0;
+      width: 800px;
     }
   }
 
@@ -185,7 +180,7 @@
   .articles {
     position: relative;
     box-sizing: border-box;
-    max-width: 1200px;
+    max-width: 800px;
     margin: 2.5rem auto;
     border-radius: 10px;
   }

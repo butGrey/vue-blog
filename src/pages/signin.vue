@@ -91,8 +91,7 @@
               console.log('注册成功');
               sessionStorage.setItem('user', $('input[name=name]').val());
               sessionStorage.setItem('avator', res.data);
-              this.$router.push({path: '/home'})
-              window.location.reload()
+              this.$router.go(-1);
             } else {
               console.log(msg.message)
             }
